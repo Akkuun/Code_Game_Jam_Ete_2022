@@ -17,7 +17,7 @@ public class PlayerMovements : MonoBehaviour
     private bool m_canMoveToRight;
 
     private float m_movementSpeed = 6f;
-    private float m_checkRadius = 0.1f;
+    private float m_checkRadius = 0.3f;
     private float m_jumpForce = 9f;
     private float m_maxJumpTime = 0.2f;
     private float m_dashSpeed = 30f;
@@ -55,7 +55,7 @@ public class PlayerMovements : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
         if(m_isGrounded)
@@ -106,10 +106,10 @@ public class PlayerMovements : MonoBehaviour
         {
             Flip();
         }
-        Vector2 position = transform.position;
-        position.x += m_movementSpeed * horitonalInput * Time.deltaTime;
-        transform.position = position;
-        //m_rigidBody.velocity = new Vector2(m_movementSpeed * horitonalInput * Time.deltaTime * 250, m_rigidBody.velocity.y);
+        //Vector2 position = transform.position;
+        //position.x += m_movementSpeed * horitonalInput * Time.deltaTime;
+        //transform.position = position;
+        m_rigidBody.velocity = new Vector2(m_movementSpeed * horitonalInput * Time.fixedDeltaTime * 50, m_rigidBody.velocity.y);
     }
 
     private void Jump()
@@ -128,7 +128,8 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isFalling", false);
             m_isJumping = true;
             m_currentJumpTime = m_maxJumpTime;
-            m_rigidBody.velocity = Vector2.up * m_jumpForce;
+            //m_rigidBody.velocity = Vector2.up * m_jumpForce;
+            m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, Vector2.up.y * m_jumpForce);
         }
         //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
@@ -144,9 +145,10 @@ public class PlayerMovements : MonoBehaviour
                 m_animator.SetBool("isJumping", true);
                 m_animator.SetBool("isFalling", false);
             }
-            
-            m_rigidBody.velocity = Vector2.up * m_jumpForce;
-            m_currentJumpTime -= Time.deltaTime;
+
+            //m_rigidBody.velocity = Vector2.up * m_jumpForce;
+            m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, Vector2.up.y * m_jumpForce);
+            m_currentJumpTime -= Time.fixedDeltaTime;
         }
         //Si il est dans les airs et qu'il saute depuis trop longtemps ou qu'il est dans les airs sans sauter
         if((!m_isGrounded && m_currentJumpTime < 0) ||(!m_isGrounded && jumpInput == 0))
@@ -221,7 +223,7 @@ public class PlayerMovements : MonoBehaviour
                 {
                     m_rigidBody.gravityScale = 0f;
                     m_rigidBody.velocity = Vector2.zero;
-                    m_animator.SetFloat("initDashCount", m_animator.GetFloat("initDashCount") - Time.deltaTime);
+                    m_animator.SetFloat("initDashCount", m_animator.GetFloat("initDashCount") - Time.fixedDeltaTime);
                 }
                 
             }
