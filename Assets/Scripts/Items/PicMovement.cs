@@ -7,49 +7,40 @@ using UnityEngine.UI;
 public class PicMovement : MonoBehaviour
 {
 
-    private float speed = 5f;
+    private Rigidbody2D m_rigidBody;
+    private float m_movementSpeed = 6f;
+    private bool m_isGrounded;
+    private float m_currentJumpTimecounter;
+    private bool m_isJumping;
 
-    private float timerDuration = 0.1f;
-    private float currentTimer;
-    private float startY;
+    public LayerMask m_groundLayer;
+    public Transform m_feet;
+    public bool m_playerCanDoubleJump;
+
+    
 
     // Start is called before the first frame update
     void Start()
     {
-      currentTimer = timerDuration;
-      startY = transform.position.y;
+        
     }
 
     void Update()
     {
+        HorizontalMovements(); 
        
     }
 
-    void FixedUpdate()
+
+    private void HorizontalMovements()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        transform.Translate(Vector2.right * horizontal * speed * Time.deltaTime);
-
-        float vertical = Input.GetAxisRaw("Jump");
-        transform.Translate(Vector2.up * vertical * speed * Time.deltaTime);
-        
-        if (vertical > 0)
-        {
-            currentTimer = timerDuration;
-        }
-        
-        if(currentTimer > 0 && vertical == 0)
-        {
-            currentTimer -= Time.deltaTime;
-        }
-        if(currentTimer <= 0)
-        {
-            if(transform.position.y > startY)
-            {
-                transform.Translate(Vector2.down * speed * 0.5f * Time.deltaTime);
-            }
-            
-        }
-
+        float horitonalInput = Input.GetAxisRaw("Horizontal");
+        Vector2 position = transform.position;
+        position.x += +m_movementSpeed * horitonalInput * Time.deltaTime;
+        Vector2 positionPerso = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Vector2 positionTotal = new Vector2(positionPerso.x-1, positionPerso.y+1);
+        transform.position = positionTotal;
     }
+
+   
 }
