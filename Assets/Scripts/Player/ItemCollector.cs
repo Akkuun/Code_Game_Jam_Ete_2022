@@ -23,11 +23,15 @@ public class ItemCollector : MonoBehaviour
     }*/
    
     private void OnTriggerEnter2D(Collider2D collision){
- 
-        if(collision.gameObject.CompareTag("Pic")){
+        print("my collision");
+        Debug.Log("test" + collision.gameObject.name);
+        if(collision.gameObject.CompareTag("Pic")){ //récupère le type d'obstacle
+         print("my pic");
             if(pic == 0){
                 pic+=1; 
-                if(collision.transform.gameObject.layer == 6){
+                Debug.Log("test" + collision.gameObject.layer);
+                Debug.Log("test" + collision.gameObject.name);
+                if(collision.transform.gameObject.layer == 6){ //le fait disparaitre
                     collision.gameObject.SetActive(false);
                 }
                 picItem.SetActive(true);
@@ -39,7 +43,8 @@ public class ItemCollector : MonoBehaviour
         if(collision.gameObject.CompareTag("Canon")){
             if(canon == 0){
                 canon+=1; 
-                
+                Debug.Log("test" + collision.gameObject.layer);
+                Debug.Log("test" + collision.gameObject.name);
                 canonItem.SetActive(true);
                 if(collision.transform.gameObject.layer == 6){
                     collision.gameObject.SetActive(false);
