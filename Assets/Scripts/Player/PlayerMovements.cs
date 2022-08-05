@@ -10,6 +10,7 @@ public class PlayerMovements : MonoBehaviour
     private bool m_isJumping;
     private bool m_isGrounded;
     private bool m_isDashing;
+    private bool m_hasDashed;
     private bool m_canDoubleJump;
     private bool m_facingRight;
 
@@ -125,8 +126,18 @@ public class PlayerMovements : MonoBehaviour
         //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
-            m_animator.SetBool("isJumping", true);
-            m_animator.SetBool("isFalling", false);
+            if(m_playerHasDoubleJump && m_canDoubleJump == false)
+            {
+                m_animator.SetBool("isJumping", true);
+                m_animator.SetBool("isFalling", false);
+                m_animator.SetBool("isDoubleJumping", true);
+            }
+            else
+            {
+                m_animator.SetBool("isJumping", true);
+                m_animator.SetBool("isFalling", false);
+            }
+            
             m_rigidBody.velocity = Vector2.up * m_jumpForce;
             m_currentJumpTime -= Time.deltaTime;
         }
@@ -157,6 +168,7 @@ public class PlayerMovements : MonoBehaviour
         {
             m_animator.SetBool("isFalling", false);
             m_animator.SetBool("isJumping", false);
+            m_animator.SetBool("isDoubleJumping", false);
             m_isJumping = false;
         }
     }
@@ -165,9 +177,10 @@ public class PlayerMovements : MonoBehaviour
     {
         if (Input.GetAxisRaw("Fire1") > 0 || m_isDashing)
         {
-            if(!m_isGrounded)
+            if(!m_isGrounded && !m_hasDashed)
             {
                 m_isDashing = true;
+
                 m_animator.SetBool("isJumping", false);
                 m_animator.SetBool("isFalling", false);
                 m_animator.SetBool("isDashing", true);
@@ -180,6 +193,7 @@ public class PlayerMovements : MonoBehaviour
                         m_animator.SetFloat("initDashCount", m_initDashTime);
                         m_animator.SetBool("isFalling", true);
                         m_isDashing = false;
+                        m_hasDashed = true;
                         m_rigidBody.velocity = Vector2.zero;
                     }
                     else if (m_currentDashTime > 0)
@@ -210,6 +224,10 @@ public class PlayerMovements : MonoBehaviour
         {
             m_currentDashTime = m_maxDashTime;
             m_isDashing = false;
+            m_hasDashed = false;
+            m_animator.SetBool("isDashing", false);
+            m_animator.SetFloat("initDashCount", m_initDashTime);
+            m_animator.SetBool("isFalling", false);
         }
     }
 
