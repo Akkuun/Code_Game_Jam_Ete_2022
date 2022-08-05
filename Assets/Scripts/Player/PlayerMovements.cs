@@ -128,4 +128,13 @@ public class PlayerMovements : MonoBehaviour
             m_isDashing = false;
         }
     }
+
+    //Détection de la collision avec un obstacle et désactivation de celui-ci
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            collision.gameObject.SetActive(false);
+        }
+    }
 }
