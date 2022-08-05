@@ -10,14 +10,26 @@ public class ItemCollector : MonoBehaviour
     [SerializeField] private GameObject picItem; 
     [SerializeField] private GameObject canonItem; 
     
-    
+    //Détection de la collision avec un obstacle et désactivation de celui-ci
+    /*private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("test" + collision.gameObject.layer);
+        Debug.Log("test" + collision.gameObject.name);
+        if (collision.gameObject.layer == 6)
+        {
+           
+            collision.gameObject.SetActive(false);
+        }
+    }*/
    
     private void OnTriggerEnter2D(Collider2D collision){
-
+ 
         if(collision.gameObject.CompareTag("Pic")){
             if(pic == 0){
                 pic+=1; 
-                
+                if(collision.transform.gameObject.layer == 6){
+                    collision.gameObject.SetActive(false);
+                }
                 picItem.SetActive(true);
                
                
@@ -29,7 +41,9 @@ public class ItemCollector : MonoBehaviour
                 canon+=1; 
                 
                 canonItem.SetActive(true);
-               
+                if(collision.transform.gameObject.layer == 6){
+                    collision.gameObject.SetActive(false);
+                }
                 Debug.Log("canon" + canon);
             }
             Debug.Log("canon" + canon);

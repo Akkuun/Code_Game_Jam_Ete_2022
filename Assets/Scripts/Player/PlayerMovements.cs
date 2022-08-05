@@ -51,6 +51,7 @@ public class PlayerMovements : MonoBehaviour
         m_isDashing = false;
         m_facingRight = true;
         m_animator.SetFloat("initDashCount", m_initDashTime);
+        
     }
 
     // Update is called once per frame
@@ -236,14 +237,7 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-    //Détection de la collision avec un obstacle et désactivation de celui-ci
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 6)
-        {
-            collision.gameObject.SetActive(false);
-        }
-    }
+    
 
     private void Flip()
     {
