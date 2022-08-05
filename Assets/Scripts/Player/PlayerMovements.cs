@@ -14,7 +14,7 @@ public class PlayerMovements : MonoBehaviour
     private bool m_facingRight;
 
     private float m_movementSpeed = 6f;
-    private float m_checkRadius = 0.3f;
+    private float m_checkRadius = 0.05f;
     private float m_jumpForce = 9f;
     private float m_maxJumpTime = 0.2f;
     private float m_dashSpeed = 30f;
@@ -114,19 +114,30 @@ public class PlayerMovements : MonoBehaviour
         }
         if(m_isGrounded == true && jumpInput == 1) 
         {
+            m_animator.SetBool("isJumping", false);
+            m_animator.SetBool("isFalling", false);
             m_isJumping = true;
             m_currentJumpTime = m_maxJumpTime;
             m_rigidBody.velocity = Vector2.up * m_jumpForce;
         }
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
+            m_animator.SetBool("isJumping", true);
+            m_animator.SetBool("isFalling", false);
             m_rigidBody.velocity = Vector2.up * m_jumpForce;
             m_currentJumpTime -= Time.deltaTime;
         }
+
+        if((!m_isGrounded && m_currentJumpTime < 0) ||(!m_isGrounded && jumpInput == 0))
+        {
+            m_animator.SetBool("isFalling", true);
+        }
+
         if (jumpInput == 0 && !m_isGrounded)
         {
             if (m_playerHasDoubleJump && m_canDoubleJump)
             {
+                m_animator.SetBool("isJumping", false);
                 m_canDoubleJump = false;
                 m_isJumping = true;
                 m_currentJumpTime = m_maxJumpTime;
@@ -134,6 +145,8 @@ public class PlayerMovements : MonoBehaviour
         }
         else if (jumpInput == 0 && m_isGrounded)
         {
+            m_animator.SetBool("isFalling", false);
+            m_animator.SetBool("isJumping", false);
             m_isJumping = false;
         }
     }
