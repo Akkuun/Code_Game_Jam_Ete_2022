@@ -13,6 +13,8 @@ public class PlayerMovements : MonoBehaviour
     private bool m_hasDashed;
     private bool m_canDoubleJump;
     private bool m_facingRight;
+    private bool m_canMoveToLeft;
+    private bool m_canMoveToRight;
 
     private float m_movementSpeed = 6f;
     private float m_checkRadius = 0.1f;
@@ -23,6 +25,7 @@ public class PlayerMovements : MonoBehaviour
     private float m_currentDashTime;
     private float m_currentJumpTime;
     private float m_initDashTime = 1f;
+
 
     private Transform rayCastOrigin;
     private RaycastHit2D hit2D;
@@ -41,7 +44,6 @@ public class PlayerMovements : MonoBehaviour
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +53,9 @@ public class PlayerMovements : MonoBehaviour
         m_isDashing = false;
         m_facingRight = true;
         m_animator.SetFloat("initDashCount", m_initDashTime);
+
+        m_canMoveToLeft = true;
+        m_canMoveToRight = true;
     }
 
     // Update is called once per frame
@@ -108,6 +113,7 @@ public class PlayerMovements : MonoBehaviour
         Vector2 position = transform.position;
         position.x += m_movementSpeed * horitonalInput * Time.deltaTime;
         transform.position = position;
+        //m_rigidBody.velocity = new Vector2(m_movementSpeed * horitonalInput * Time.deltaTime * 250, m_rigidBody.velocity.y);
     }
 
     private void Jump()
@@ -242,6 +248,18 @@ public class PlayerMovements : MonoBehaviour
         if (collision.gameObject.layer == 6)
         {
             collision.gameObject.SetActive(false);
+        }
+    }
+
+    public void ChangePossibilityToMove(bool right, bool can)
+    {
+        if(right)
+        {
+            m_canMoveToRight = can;
+        }
+        else
+        {
+            m_canMoveToLeft = can;
         }
     }
 
