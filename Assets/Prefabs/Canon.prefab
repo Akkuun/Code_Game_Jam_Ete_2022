@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7785430085533770029}
   - component: {fileID: 7785430085533770024}
   - component: {fileID: 7785430085533770025}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e287a90dedd3e0448afcc4110d45fbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_curentDelay: 0
   m_animator: {fileID: 7785430085533770029}
+  m_bulletPrefab: {fileID: 0}
   m_maxDelay: 5
