@@ -16,6 +16,7 @@ public class PlayerMovements : MonoBehaviour
 
     public LayerMask m_groundLayer;
     public Transform m_feet;
+    public bool m_playerCanDoubleJump;
 
     // Start is called before the first frame update
     void Start()
@@ -26,15 +27,28 @@ public class PlayerMovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HorizontalMovements();
+        Jump();
+    }
+
+    private void HorizontalMovements()
+    {
         float horitonalInput = Input.GetAxisRaw("Horizontal");
         Vector2 position = transform.position;
-        position.x += + m_movementSpeed * horitonalInput * Time.deltaTime;
+        position.x += +m_movementSpeed * horitonalInput * Time.deltaTime;
         transform.position = position;
+    }
 
+    private void Jump()
+    {
+        bool canDoubleJump = true;
         float jumpInput = Input.GetAxisRaw("Jump");
 
         m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
-        Debug.Log(m_isGrounded);
+        if (m_isGrounded == true && jumpInput == 0 && m_playerCanDoubleJump)
+        {
+            canDoubleJump = true;
+        }
         if(m_isGrounded == true && jumpInput == 1) 
         {
             m_isJumping = true;
@@ -55,7 +69,24 @@ public class PlayerMovements : MonoBehaviour
         }
         if (jumpInput == 0)
         {
-            m_isJumping = false;
+            if (m_playerCanDoubleJump)
+            {
+                if (!canDoubleJump)
+                {
+                    m_isJumping = false;
+                }
+                else
+                {
+                    canDoubleJump = false;
+                    m_isJumping = true;
+                    m_currentJumpTimecounter = m_maxJumpTime;
+                }
+            }
+            else
+            {
+                m_isJumping = false;
+            }
+            
         }
     }
 }
