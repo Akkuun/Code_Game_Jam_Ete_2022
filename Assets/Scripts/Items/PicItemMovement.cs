@@ -4,18 +4,12 @@ using UnityEngine;
 using UnityEngine.UI; 
 
 
-public class PicMovement : MonoBehaviour
+public class PicItemMovement : MonoBehaviour
 {
 
-    private Rigidbody2D m_rigidBody;
+   
     private float m_movementSpeed = 6f;
-    private bool m_isGrounded;
-    private float m_currentJumpTimecounter;
-    private bool m_isJumping;
-
-    public LayerMask m_groundLayer;
-    public Transform m_feet;
-    public bool m_playerCanDoubleJump;
+    
 
     
 
@@ -38,8 +32,13 @@ public class PicMovement : MonoBehaviour
         Vector2 position = transform.position;
         position.x += +m_movementSpeed * horitonalInput * Time.deltaTime;
         Vector2 positionPerso = GameObject.FindGameObjectWithTag("Player").transform.position;
-        Vector2 positionTotal = new Vector2(positionPerso.x-1, positionPerso.y+1);
+
+        Vector2 positionTotal = new Vector2(positionPerso.x-0.5f, positionPerso.y+1);
         transform.position = positionTotal;
+        
+         
+        
+        
     }
 
    

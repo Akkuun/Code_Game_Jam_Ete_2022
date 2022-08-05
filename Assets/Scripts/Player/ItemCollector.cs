@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class ItemCollector : MonoBehaviour
 {
     private int pic = 0; 
-    [SerializeField] private GameObject imagePic; 
+    private int canon = 0; 
+    [SerializeField] private GameObject picItem; 
+    [SerializeField] private GameObject canonItem; 
     
     
    
@@ -16,11 +18,21 @@ public class ItemCollector : MonoBehaviour
             if(pic == 0){
                 pic+=1; 
                 
-                imagePic.SetActive(true);
+                picItem.SetActive(true);
                
-                Debug.Log("pic" + pic);
+               
             }
-            Debug.Log("pic" + pic);
+            
+        }
+        if(collision.gameObject.CompareTag("Canon")){
+            if(canon == 0){
+                canon+=1; 
+                
+                canonItem.SetActive(true);
+               
+                Debug.Log("canon" + canon);
+            }
+            Debug.Log("canon" + canon);
 
         }
 
@@ -31,7 +43,13 @@ public class ItemCollector : MonoBehaviour
         if(pic == 0){
             Debug.Log("pas de pic");
         }else{
-            imagePic.SetActive(false); 
+            picItem.SetActive(false); 
+        }
+
+         if(canon == 0){
+            Debug.Log("pas de canon");
+        }else{
+            canonItem.SetActive(false); 
         }
 
     }
