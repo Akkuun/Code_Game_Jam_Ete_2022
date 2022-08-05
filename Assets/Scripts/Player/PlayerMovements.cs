@@ -11,6 +11,7 @@ public class PlayerMovements : MonoBehaviour
     private bool m_isGrounded;
     private bool m_isDashing;
     private bool m_canDoubleJump;
+    private bool m_facingRight;
 
     private float m_movementSpeed = 6f;
     private float m_checkRadius = 0.3f;
@@ -25,6 +26,8 @@ public class PlayerMovements : MonoBehaviour
 
     public LayerMask m_groundLayer;
 
+    public Animator m_animator;
+
     public Transform m_feet;
 
     public bool m_playerHasDoubleJump;
@@ -38,12 +41,21 @@ public class PlayerMovements : MonoBehaviour
         m_currentDashTime = m_maxDashTime;
         m_currentJumpTime = m_maxJumpTime;
         m_isDashing = false;
+        m_facingRight = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
+        if(m_isGrounded)
+        {
+            m_animator.SetBool("isJumping", false);
+        }
+        else
+        {
+            m_animator.SetBool("isJumping", true);
+        }
         if (m_playerHasDashing)
         {
             if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
@@ -63,6 +75,28 @@ public class PlayerMovements : MonoBehaviour
     private void HorizontalMovements()
     {
         float horitonalInput = Input.GetAxisRaw("Horizontal");
+        if(horitonalInput > 0 || horitonalInput < 0 && !m_animator.GetBool("isJumping"))
+        {
+            m_animator.SetFloat("Speed", 1);
+        }
+        else
+        {
+            m_animator.SetFloat("Speed", 0);
+        }
+        if(m_animator.GetBool("isJumping"))
+        {
+            m_animator.SetFloat("Speed", 0);
+        }
+
+        if (horitonalInput > 0 && !m_facingRight)
+        {
+            Flip();
+        }
+        else if(horitonalInput < 0 && m_facingRight)
+        {
+            Flip();
+        }
+
         Vector2 position = transform.position;
         position.x += +m_movementSpeed * horitonalInput * Time.deltaTime;
         transform.position = position;
@@ -117,7 +151,15 @@ public class PlayerMovements : MonoBehaviour
                 {
                     m_isDashing = true;
                     m_currentDashTime -= Time.deltaTime;
-                    m_rigidBody.velocity = Vector2.right * m_dashSpeed;
+                    if(m_facingRight)
+                    {
+                        m_rigidBody.velocity = Vector2.right * m_dashSpeed;
+                    }
+                    else
+                    {
+                        m_rigidBody.velocity = Vector2.left * m_dashSpeed;
+                    }
+                    
                 }
             }
         }
@@ -136,5 +178,14 @@ public class PlayerMovements : MonoBehaviour
         {
             collision.gameObject.SetActive(false);
         }
+    }
+
+    private void Flip()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+
+        m_facingRight = !m_facingRight;
     }
 }
