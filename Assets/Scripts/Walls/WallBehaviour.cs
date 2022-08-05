@@ -19,7 +19,7 @@ public class WallBehaviour : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            collision.gameObject.GetComponent<PlayerMovements>().ChangePossibilityToMove(true, false);
+            return;
         }
     }
 }

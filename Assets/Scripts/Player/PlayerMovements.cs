@@ -26,10 +26,9 @@ public class PlayerMovements : MonoBehaviour
     private float m_currentJumpTime;
     private float m_initDashTime = 1f;
 
-
     private Transform rayCastOrigin;
-    private RaycastHit2D hit2D;
 
+    private RaycastHit2D hit2D;
 
     //-------------------------------------
 
@@ -239,17 +238,13 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
+    //Détection de la collision avec un obstacle et désactivation de celui-ci
     
-
-    public void ChangePossibilityToMove(bool right, bool can)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(right)
+        if (collision.gameObject.layer == 6)
         {
-            m_canMoveToRight = can;
-        }
-        else
-        {
-            m_canMoveToLeft = can;
+            collision.gameObject.SetActive(false);
         }
     }
 
