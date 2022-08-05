@@ -24,6 +24,10 @@ public class PlayerMovements : MonoBehaviour
     private float m_currentJumpTime;
     private float m_initDashTime = 1f;
 
+    private Transform rayCastOrigin;
+    private RaycastHit2D hit2D;
+
+
     //-------------------------------------
 
     public LayerMask m_groundLayer;
@@ -31,6 +35,8 @@ public class PlayerMovements : MonoBehaviour
     public Animator m_animator;
 
     public Transform m_feet;
+    public Transform m_right;
+    public Transform m_left;
 
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
@@ -99,9 +105,8 @@ public class PlayerMovements : MonoBehaviour
         {
             Flip();
         }
-
         Vector2 position = transform.position;
-        position.x += +m_movementSpeed * horitonalInput * Time.deltaTime;
+        position.x += m_movementSpeed * horitonalInput * Time.deltaTime;
         transform.position = position;
     }
 
