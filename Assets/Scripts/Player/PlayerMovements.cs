@@ -6,29 +6,58 @@ public class PlayerMovements : MonoBehaviour
 {
 
     private Rigidbody2D m_rigidBody;
-    private float m_movementSpeed = 6f;
-    private bool m_isGrounded;
-    private float m_currentJumpTimecounter;
+
     private bool m_isJumping;
+    private bool m_isGrounded;
+    private bool m_isDashing;
+    private bool m_canDoubleJump;
+
+    private float m_movementSpeed = 6f;
     private float m_checkRadius = 0.3f;
-    private float jumpForce = 9f;
+    private float m_jumpForce = 9f;
     private float m_maxJumpTime = 0.2f;
+    private float m_dashSpeed = 30f;
+    private float m_maxDashTime = 0.15f;
+    private float m_currentDashTime;
+    private float m_currentJumpTime;
+
+    //-------------------------------------
 
     public LayerMask m_groundLayer;
+
     public Transform m_feet;
-    public bool m_playerCanDoubleJump;
+
+    public bool m_playerHasDoubleJump;
+    public bool m_playerHasDashing;
+
 
     // Start is called before the first frame update
     void Start()
     {
         m_rigidBody = GetComponent<Rigidbody2D>();
+        m_currentDashTime = m_maxDashTime;
+        m_currentJumpTime = m_maxJumpTime;
+        m_isDashing = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        HorizontalMovements();
-        Jump();
+        m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
+        if (m_playerHasDashing)
+        {
+            if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
+            {
+                HorizontalMovements();
+                Jump();
+            }
+            Dash();
+        }
+        else
+        {
+            HorizontalMovements();
+            Jump();
+        }
     }
 
     private void HorizontalMovements()
@@ -41,52 +70,62 @@ public class PlayerMovements : MonoBehaviour
 
     private void Jump()
     {
-        bool canDoubleJump = true;
         float jumpInput = Input.GetAxisRaw("Jump");
 
-        m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
-        if (m_isGrounded == true && jumpInput == 0 && m_playerCanDoubleJump)
+        if (m_isGrounded == true && m_playerHasDoubleJump)
         {
-            canDoubleJump = true;
+            m_canDoubleJump = true;
         }
         if(m_isGrounded == true && jumpInput == 1) 
         {
             m_isJumping = true;
-            m_currentJumpTimecounter = m_maxJumpTime;
-            m_rigidBody.velocity = Vector2.up * jumpForce;
+            m_currentJumpTime = m_maxJumpTime;
+            m_rigidBody.velocity = Vector2.up * m_jumpForce;
         }
-        if(jumpInput == 1 && m_isJumping)
+        if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
-            if(m_currentJumpTimecounter > 0)
+            m_rigidBody.velocity = Vector2.up * m_jumpForce;
+            m_currentJumpTime -= Time.deltaTime;
+        }
+        if (jumpInput == 0 && !m_isGrounded)
+        {
+            if (m_playerHasDoubleJump && m_canDoubleJump)
             {
-                m_rigidBody.velocity = Vector2.up * jumpForce;
-                m_currentJumpTimecounter -= Time.deltaTime;
-            }
-            else
-            {
-                m_isJumping = false;
+                m_canDoubleJump = false;
+                m_isJumping = true;
+                m_currentJumpTime = m_maxJumpTime;
             }
         }
-        if (jumpInput == 0)
+        else if (jumpInput == 0 && m_isGrounded)
         {
-            if (m_playerCanDoubleJump)
+            m_isJumping = false;
+        }
+    }
+
+    private void Dash()
+    {
+        if (Input.GetAxisRaw("Fire1") > 0 || m_isDashing)
+        {
+            if(!m_isGrounded)
             {
-                if (!canDoubleJump)
+                if (m_currentDashTime <= 0 && m_isDashing)
                 {
-                    m_isJumping = false;
+                    m_isDashing = false;
+                    m_rigidBody.velocity = Vector2.zero;
                 }
-                else
+                else if (m_currentDashTime > 0)
                 {
-                    canDoubleJump = false;
-                    m_isJumping = true;
-                    m_currentJumpTimecounter = m_maxJumpTime;
+                    m_isDashing = true;
+                    m_currentDashTime -= Time.deltaTime;
+                    m_rigidBody.velocity = Vector2.right * m_dashSpeed;
                 }
             }
-            else
-            {
-                m_isJumping = false;
-            }
-            
+        }
+
+        if (m_isGrounded)
+        {
+            m_currentDashTime = m_maxDashTime;
+            m_isDashing = false;
         }
     }
 
