@@ -8,6 +8,7 @@ TagManager:
   - PicItem
   - CanonItem
   - Canon
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
