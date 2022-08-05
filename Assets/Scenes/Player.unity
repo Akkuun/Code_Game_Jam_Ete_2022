@@ -350,15 +350,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d273776fdd4160c429aa87c3ef7790ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isJumping: 0
-  m_maxJumpTime: 0.2
-  m_currentJumpTime: 0
   m_groundLayer:
     serializedVersion: 2
     m_Bits: 8
   m_feet: {fileID: 1576205141}
-  m_playerHasDoubleJump: 1
-  m_canDoubleJump: 0
+  m_playerHasDoubleJump: 0
+  m_playerHasDashing: 0
 --- !u!212 &679387136
 SpriteRenderer:
   m_ObjectHideFlags: 0

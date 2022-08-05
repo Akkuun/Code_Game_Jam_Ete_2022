@@ -7,19 +7,19 @@ public class PlayerMovements : MonoBehaviour
 
     private Rigidbody2D m_rigidBody;
 
-    public bool m_isJumping;
+    private bool m_isJumping;
     private bool m_isGrounded;
     private bool m_isDashing;
-
+    private bool m_canDoubleJump;
 
     private float m_movementSpeed = 6f;
     private float m_checkRadius = 0.3f;
     private float m_jumpForce = 9f;
-    public float m_maxJumpTime = 0.2f;
+    private float m_maxJumpTime = 0.2f;
     private float m_dashSpeed = 30f;
     private float m_maxDashTime = 0.15f;
     private float m_currentDashTime;
-    public float m_currentJumpTime;
+    private float m_currentJumpTime;
 
     //-------------------------------------
 
@@ -28,11 +28,7 @@ public class PlayerMovements : MonoBehaviour
     public Transform m_feet;
 
     public bool m_playerHasDoubleJump;
-    public bool m_canDoubleJump;
-    
-
-    
-
+    public bool m_playerHasDashing;
 
 
     // Start is called before the first frame update
@@ -46,17 +42,22 @@ public class PlayerMovements : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {/*
-        HorizontalMovements();
-        Jump();
-        */
+    {
         m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
-        if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
+        if (m_playerHasDashing)
+        {
+            if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
+            {
+                HorizontalMovements();
+                Jump();
+            }
+            Dash();
+        }
+        else
         {
             HorizontalMovements();
             Jump();
         }
-        Dash();
     }
 
     private void HorizontalMovements()
