@@ -53,9 +53,6 @@ public class PlayerMovements : MonoBehaviour
         m_isDashing = false;
         m_facingRight = true;
         m_animator.SetFloat("initDashCount", m_initDashTime);
-
-        m_canMoveToLeft = true;
-        m_canMoveToRight = true;
     }
 
     // Update is called once per frame
@@ -120,7 +117,7 @@ public class PlayerMovements : MonoBehaviour
     {
         float jumpInput = Input.GetAxisRaw("Jump");
 
-        //Au sol, il regénère son double jump
+        //Au sol, il regÃ©nÃ¨re son double jump
         if (m_isGrounded == true && m_playerHasDoubleJump)
         {
             m_canDoubleJump = true;
@@ -134,7 +131,7 @@ public class PlayerMovements : MonoBehaviour
             m_currentJumpTime = m_maxJumpTime;
             m_rigidBody.velocity = Vector2.up * m_jumpForce;
         }
-        //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
+        //Si il saute avec espace enfoncÃ© et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
             if(m_playerHasDoubleJump && m_canDoubleJump == false)
@@ -160,7 +157,7 @@ public class PlayerMovements : MonoBehaviour
         //Si il saute pas mais qu'il est dans les airs
         if (jumpInput == 0 && !m_isGrounded)
         {
-            //Si le joueur a la capacité pour double sauter et peut double sauter
+            //Si le joueur a la capacitÃ© pour double sauter et peut double sauter
             if (m_playerHasDoubleJump && m_canDoubleJump)
             {
                 m_animator.SetBool("isJumping", false);
@@ -168,7 +165,7 @@ public class PlayerMovements : MonoBehaviour
                 m_isJumping = true;
                 m_currentJumpTime = m_maxJumpTime;
             }
-            //Sinon si il a pas la capacité pour double jump
+            //Sinon si il a pas la capacitÃ© pour double jump
             else if(!m_playerHasDoubleJump || (!m_canDoubleJump && m_playerHasDoubleJump && m_currentJumpTime != m_maxJumpTime))
             {
                 m_isJumping = false;
@@ -242,14 +239,7 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-    //Détection de la collision avec un obstacle et désactivation de celui-ci
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 6)
-        {
-            collision.gameObject.SetActive(false);
-        }
-    }
+    
 
     public void ChangePossibilityToMove(bool right, bool can)
     {
