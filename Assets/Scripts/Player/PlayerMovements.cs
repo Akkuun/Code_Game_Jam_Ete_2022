@@ -30,6 +30,8 @@ public class PlayerMovements : MonoBehaviour
 
     private RaycastHit2D hit2D;
 
+    private Vector3 respawnPoint;
+
     //-------------------------------------
 
     public LayerMask m_groundLayer;
@@ -52,6 +54,8 @@ public class PlayerMovements : MonoBehaviour
         m_isDashing = false;
         m_facingRight = true;
         m_animator.SetFloat("initDashCount", m_initDashTime);
+
+        respawnPoint = transform.position;
     }
 
     // Update is called once per frame
@@ -238,13 +242,22 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-    //Détection de la collision avec un obstacle et désactivation de celui-ci
-    
+    //Collision detection with an object, when there is a collision the object will disappear, the position of the character will be the respawn point  
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 6)
         {
             collision.gameObject.SetActive(false);
+            transform.position = respawnPoint;
+        }
+    }
+
+    //Trigger detection, if the character trigger a checkpoint, his respawn point will be the point of trigger
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Checkpoint")
+        {
+            respawnPoint = transform.position;
         }
     }
 
