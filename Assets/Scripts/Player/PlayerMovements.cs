@@ -15,11 +15,11 @@ public class PlayerMovements : MonoBehaviour
     private bool m_facingRight;
 
     private float m_movementSpeed = 6f;
-    private float m_checkRadius = 0.05f;
+    private float m_checkRadius = 0.1f;
     private float m_jumpForce = 9f;
     private float m_maxJumpTime = 0.2f;
     private float m_dashSpeed = 30f;
-    private float m_maxDashTime = 0.15f;
+    private float m_maxDashTime = 0.25f;
     private float m_currentDashTime;
     private float m_currentJumpTime;
     private float m_initDashTime = 1f;
