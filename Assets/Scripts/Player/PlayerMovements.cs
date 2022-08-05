@@ -21,6 +21,7 @@ public class PlayerMovements : MonoBehaviour
     private float m_maxDashTime = 0.15f;
     private float m_currentDashTime;
     private float m_currentJumpTime;
+    private float m_initDashTime = 1f;
 
     //-------------------------------------
 
@@ -42,6 +43,7 @@ public class PlayerMovements : MonoBehaviour
         m_currentJumpTime = m_maxJumpTime;
         m_isDashing = false;
         m_facingRight = true;
+        m_animator.SetFloat("initDashCount", m_initDashTime);
     }
 
     // Update is called once per frame
@@ -52,7 +54,7 @@ public class PlayerMovements : MonoBehaviour
         {
             m_animator.SetBool("isJumping", false);
         }
-        else
+        else if (!m_animator.GetBool("isDashing"))
         {
             m_animator.SetBool("isJumping", true);
         }
@@ -142,25 +144,40 @@ public class PlayerMovements : MonoBehaviour
         {
             if(!m_isGrounded)
             {
-                if (m_currentDashTime <= 0 && m_isDashing)
+                m_isDashing = true;
+                m_animator.SetBool("isJumping", false);
+                m_animator.SetBool("isDashing", true);
+                if (m_animator.GetFloat("initDashCount") < 0)
                 {
-                    m_isDashing = false;
+                    m_rigidBody.gravityScale = 3.6f;
+                    if (m_currentDashTime <= 0 && m_isDashing)
+                    {
+                        m_animator.SetBool("isDashing", false);
+                        m_animator.SetFloat("initDashCount", m_initDashTime);
+                        m_isDashing = false;
+                        m_rigidBody.velocity = Vector2.zero;
+                    }
+                    else if (m_currentDashTime > 0)
+                    {
+                        m_currentDashTime -= Time.deltaTime;
+                        if (m_facingRight)
+                        {
+                            m_rigidBody.velocity = Vector2.right * m_dashSpeed;
+                        }
+                        else
+                        {
+                            m_rigidBody.velocity = Vector2.left * m_dashSpeed;
+                        }
+
+                    }
+                }
+                else
+                {
+                    m_rigidBody.gravityScale = 0f;
                     m_rigidBody.velocity = Vector2.zero;
+                    m_animator.SetFloat("initDashCount", m_animator.GetFloat("initDashCount") - Time.deltaTime);
                 }
-                else if (m_currentDashTime > 0)
-                {
-                    m_isDashing = true;
-                    m_currentDashTime -= Time.deltaTime;
-                    if(m_facingRight)
-                    {
-                        m_rigidBody.velocity = Vector2.right * m_dashSpeed;
-                    }
-                    else
-                    {
-                        m_rigidBody.velocity = Vector2.left * m_dashSpeed;
-                    }
-                    
-                }
+                
             }
         }
 
