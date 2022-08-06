@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8050786337913120468}
   - component: {fileID: 8050786337913120459}
   - component: {fileID: 8050786337913120458}
+  - component: {fileID: 2782945132561692474}
   m_Layer: 0
   m_Name: Small Bullet
   m_TagString: CanonItem
@@ -97,3 +98,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d7e879fda58174797bec5a129fb26c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2782945132561692474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8050786337913120457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaeff0d98c6357f4996c2e170b63ebc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rotationCenter: {fileID: 148684457532158716, guid: 8635d426776bb774d9249cf5488c17ce, type: 3}
+  m_angularSpeed: 2
+  m_rotationRadius: 1
