@@ -15,21 +15,25 @@ public class PlayerMovements : MonoBehaviour
     private bool m_facingRight;
     private bool m_isDoubleJumping;
     private bool m_isFalling;
-   
+
+    private bool m_canMoveToLeft;
+    private bool m_canMoveToRight;
 
     private float m_movementSpeed = 6f;
-    private float m_checkRadius = 0.05f;
+    private float m_checkRadius = 0.3f;
     private float m_jumpForce = 9f;
     private float m_maxJumpTime = 0.2f;
     private float m_dashSpeed = 30f;
-    private float m_maxDashTime = 0.15f;
+    private float m_maxDashTime = 0.25f;
     private float m_currentDashTime;
     private float m_currentJumpTime;
     private float m_initDashTime = 1f;
 
     private Transform rayCastOrigin;
+
     private RaycastHit2D hit2D;
 
+    private Vector3 respawnPoint;
 
     //-------------------------------------
 
@@ -44,9 +48,6 @@ public class PlayerMovements : MonoBehaviour
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
 
-    
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -56,10 +57,12 @@ public class PlayerMovements : MonoBehaviour
         m_isDashing = false;
         m_facingRight = true;
         m_animator.SetFloat("initDashCount", m_initDashTime);
+
+        respawnPoint = transform.position;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
         if(m_isGrounded)
@@ -72,6 +75,7 @@ public class PlayerMovements : MonoBehaviour
         }
         if (m_playerHasDashing)
         {
+           
             if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
             {
                 HorizontalMovements();
@@ -110,16 +114,17 @@ public class PlayerMovements : MonoBehaviour
         {
             Flip();
         }
-        Vector2 position = transform.position;
-        position.x += m_movementSpeed * horitonalInput * Time.deltaTime;
-        transform.position = position;
+        //Vector2 position = transform.position;
+        //position.x += m_movementSpeed * horitonalInput * Time.deltaTime;
+        //transform.position = position;
+        m_rigidBody.velocity = new Vector2(m_movementSpeed * horitonalInput * Time.fixedDeltaTime * 50, m_rigidBody.velocity.y);
     }
 
     private void Jump()
     {
         float jumpInput = Input.GetAxisRaw("Jump");
 
-        //Au sol, il regénère son double jump
+        //Au sol, il regï¿½nï¿½re son double jump
         if (m_isGrounded && m_playerHasDoubleJump)
         {
             m_canDoubleJump = true;
@@ -131,10 +136,11 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isFalling", false);
             m_isJumping = true;
             m_currentJumpTime = m_maxJumpTime;
-            m_rigidBody.velocity = Vector2.up * m_jumpForce;
+
             m_isFalling = true;
+            m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, Vector2.up.y * m_jumpForce);
         }
-        //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
+        //Si il saute avec espace enfoncÃ© et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
 
@@ -155,9 +161,10 @@ public class PlayerMovements : MonoBehaviour
                 m_isDoubleJumping = !m_isDoubleJumping;
                
             }
-            
-            m_rigidBody.velocity = Vector2.up * m_jumpForce;
-            m_currentJumpTime -= Time.deltaTime;
+
+            //m_rigidBody.velocity = Vector2.up * m_jumpForce;
+            m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, Vector2.up.y * m_jumpForce);
+            m_currentJumpTime -= Time.fixedDeltaTime;
         }
         //Si il est dans les airs et qu'il saute depuis trop longtemps ou qu'il est dans les airs sans sauter
         if((!m_isGrounded && m_currentJumpTime < 0) ||(!m_isGrounded && jumpInput == 0))
@@ -172,7 +179,7 @@ public class PlayerMovements : MonoBehaviour
         if (jumpInput == 0 && !m_isGrounded)
         {
         m_isDoubleJumping=false;
-            //Si le joueur a la capacité pour double sauter et peut double sauter
+            //Si le joueur a la capacitï¿½ pour double sauter et peut double sauter
             if (m_playerHasDoubleJump && m_canDoubleJump)
             {
                 m_animator.SetBool("isJumping", false);
@@ -180,7 +187,7 @@ public class PlayerMovements : MonoBehaviour
                 m_isJumping = true;
                 m_currentJumpTime = m_maxJumpTime;
             }
-            //Sinon si il a pas la capacité pour double jump
+            //Sinon si il a pas la capacitÃ© pour double jump
             else if(!m_playerHasDoubleJump || (!m_canDoubleJump && m_playerHasDoubleJump && m_currentJumpTime != m_maxJumpTime))
             {
                 m_isJumping = false;
@@ -241,7 +248,7 @@ public class PlayerMovements : MonoBehaviour
                 {
                     m_rigidBody.gravityScale = 0f;
                     m_rigidBody.velocity = Vector2.zero;
-                    m_animator.SetFloat("initDashCount", m_animator.GetFloat("initDashCount") - Time.deltaTime);
+                    m_animator.SetFloat("initDashCount", m_animator.GetFloat("initDashCount") - Time.fixedDeltaTime);
                 }
                 
             }
@@ -259,12 +266,22 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-    //Détection de la collision avec un obstacle et désactivation de celui-ci
+    //Collision detection with an object, when there is a collision the object will disappear, the position of the character will be the respawn point  
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 6)
         {
             collision.gameObject.SetActive(false);
+            transform.position = respawnPoint;
+        }
+    }
+
+    //Trigger detection, if the character trigger a checkpoint, his respawn point will be the point of trigger
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Checkpoint")
+        {
+            respawnPoint = transform.position;
         }
     }
 
@@ -276,9 +293,6 @@ public class PlayerMovements : MonoBehaviour
 
         m_facingRight = !m_facingRight;
     }
-
-
-    
 
     public bool getHasDashed(){
 
@@ -310,6 +324,13 @@ public class PlayerMovements : MonoBehaviour
     }
     //doit faire avec hasdoublejumped plutot
 
+    public void setHasDoubleJump(bool doubleJump){
+        m_playerHasDoubleJump = doubleJump;
+        Jump();
+    }
 
-
+    public void setHasDash(bool dash){
+        m_playerHasDashing = dash;
+        Dash();
+    }
 }
