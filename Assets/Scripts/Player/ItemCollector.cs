@@ -8,7 +8,9 @@ public class ItemCollector : MonoBehaviour
     private int pic = 0; 
     private int canon = 0; 
     [SerializeField] private GameObject picItem; 
-    [SerializeField] private GameObject canonItem; 
+    [SerializeField] private GameObject canonItem;
+
+    private PlayerMovements m_playerMovements;
     
     //Détection de la collision avec un obstacle et désactivation de celui-ci
     /*private void OnCollisionEnter2D(Collision2D collision)
@@ -35,8 +37,6 @@ public class ItemCollector : MonoBehaviour
                     collision.gameObject.SetActive(false);
                 }
                 picItem.SetActive(true);
-               
-               
             }
             
         }
