@@ -36,7 +36,7 @@ public class PlayerMovements : MonoBehaviour
     private Vector3 respawnPoint;
 
     private ItemCollector m_itemCollector;
-
+    
     //-------------------------------------
 
     public LayerMask m_groundLayer;
@@ -50,6 +50,7 @@ public class PlayerMovements : MonoBehaviour
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +61,7 @@ public class PlayerMovements : MonoBehaviour
         m_isDashing = false;
         m_facingRight = true;
         m_animator.SetFloat("initDashCount", m_initDashTime);
+        
 
         respawnPoint = transform.position;
     }
