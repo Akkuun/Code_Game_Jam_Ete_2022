@@ -26,6 +26,9 @@ public class ItemCollector : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision){
+        
+
+        
 
         if (pic + canon < 5)
         {
@@ -35,11 +38,15 @@ public class ItemCollector : MonoBehaviour
                 healthBar.resetLife();
                
                 GameObject picObject = Instantiate(picItemPrefab) as GameObject;
+                picObject.SetActive(true); 
+                
+       
 
-                 if (collision.transform.gameObject.layer == 6)
+                if (collision.transform.gameObject.layer == 6)
                 {
                     //récupère le parent parent (pike = children, children)
                     collision.gameObject.transform.parent.gameObject.SetActive(false);
+                    
                 }
             }
             if (collision.gameObject.CompareTag("Canon"))
@@ -49,6 +56,8 @@ public class ItemCollector : MonoBehaviour
               
 
                 GameObject canonObject = Instantiate(canonItemPrefab) as GameObject;
+                canonObject.SetActive(true);
+                
 
 
                 if (collision.transform.gameObject.layer == 6)
@@ -67,6 +76,43 @@ public class ItemCollector : MonoBehaviour
              
         }
 
+        //RESET changement de scene 
+        /*if(collision.gameObject.name == "Square"){
+          
+            
+            if(pic >0){
+                 GameObject[] smallPics = GameObject.FindGameObjectsWithTag("PicItem");
+                if(smallPics.Length >0){
+                    
+                    foreach(GameObject p in smallPics){
+                        Destroy(p); 
+                    }
+
+                }
+
+            }
+
+            if(canon > 0){
+                GameObject[] smallCanons = GameObject.FindGameObjectsWithTag("CanonItem");
+
+                if(smallCanons.Length >0){
+                   
+                    foreach(GameObject c in smallCanons){
+                        Destroy(c); 
+                    }
+
+                }
+
+            }
+            pic = 0; 
+            canon = 0; 
+
+           
+            
+
+            //canonObject.SetActive(false);
+            healthBar.resetLife();
+        }*/
         
     }
 
@@ -129,4 +175,5 @@ public class ItemCollector : MonoBehaviour
             m_canonHasBeenUsed = false;
         }
     }
+
 }
