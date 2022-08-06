@@ -42,6 +42,7 @@ public class TestPlayerDeath : MonoBehaviour
     public LayerMask m_groundLayer;
 
     public Animator m_animator;
+    public Animator pike_animator;
 
     public Transform m_feet;
     public Transform m_right;
@@ -280,7 +281,6 @@ public class TestPlayerDeath : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            Destroy(collision.gameObject);
             m_animator.SetBool("isDying", true);
 
             if (m_animator.GetBool("isDying"))
