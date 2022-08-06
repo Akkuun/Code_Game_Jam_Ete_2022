@@ -158,8 +158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 1.2201004, y: 2.2101}
-  m_SizeDelta: {x: 34.4207, y: 37.1609}
+  m_AnchoredPosition: {x: -0.5101013, y: 0.6801}
+  m_SizeDelta: {x: 34.7207, y: 34.0608}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &86783241
 MonoBehaviour:
@@ -2129,18 +2129,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1346603055}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: 0, z: 0.0014248106, w: -0.999999}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1923586147}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.163}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -0.000017166138}
-  m_SizeDelta: {x: -0.000045776, y: 0.00006485}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -0, y: 0.0001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1346603057
 MonoBehaviour:
@@ -2162,7 +2162,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3a411fdb1c3a22140991a0dbc620f2c1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bfed51dbc61efe743a04c8e15ab700e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2257,12 +2257,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1923586147}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.3573, y: 0}
-  m_SizeDelta: {x: -3.717, y: 0}
+  m_AnchoredPosition: {x: -1.4561996, y: 0.049900055}
+  m_SizeDelta: {x: -2.9125, y: -5.9247}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1510677421
 MonoBehaviour:
@@ -2277,7 +2277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9294118, g: 0.058823533, b: 0.11764707, a: 1}
+  m_Color: {r: 0.68235296, g: 0.31764707, b: 0.32941177, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4573,8 +4573,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1510677420}
   - {fileID: 1346603056}
+  - {fileID: 1510677420}
   - {fileID: 86783240}
   m_Father: {fileID: 1063681722}
   m_RootOrder: 0
