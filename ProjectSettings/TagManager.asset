@@ -12,6 +12,8 @@ TagManager:
   - MovingCheckpoint
   - Obstacle
   - Health
+  - UwuScreen
+  - Plateform
   layers:
   - Default
   - TransparentFX
