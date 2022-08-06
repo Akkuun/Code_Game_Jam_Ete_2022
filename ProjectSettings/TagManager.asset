@@ -13,7 +13,7 @@ TagManager:
   - Obstacle
   - Health
   - UwuScreen
-  - PicTuto
+  - Plateform
   layers:
   - Default
   - TransparentFX
