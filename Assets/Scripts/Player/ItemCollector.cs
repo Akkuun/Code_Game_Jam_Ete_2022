@@ -7,11 +7,12 @@ public class ItemCollector : MonoBehaviour
 {
     private int pic = 0; 
     private int canon = 0; 
+    private int totalItem = 0; 
     [SerializeField] private GameObject picItem; 
     [SerializeField] private GameObject canonItem;
-
-    private PlayerMovements m_playerMovements; 
     
+    private PlayerMovements m_playerMovements;
+
     //Détection de la collision avec un obstacle et désactivation de celui-ci
     /*private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -23,16 +24,17 @@ public class ItemCollector : MonoBehaviour
             collision.gameObject.SetActive(false);
         }
     }*/
+
    
     private void OnTriggerEnter2D(Collider2D collision){
         
        
         if(collision.gameObject.CompareTag("Pic")){ //récupère le type d'obstacle
-
-       
  
-            if(pic == 0){
-                pic+=1; 
+            if(totalItem < 3){
+                pic++;
+                totalItem++;  
+
             
                 if(collision.transform.gameObject.layer == 6){ //le fait disparaitre
                     collision.gameObject.SetActive(false);
@@ -43,8 +45,9 @@ public class ItemCollector : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Canon")){
           
-            if(canon == 0){
-                canon+=1; 
+            if(totalItem <3){
+                canon++; 
+                totalItem++;
                 
                 canonItem.SetActive(true);
         
@@ -58,24 +61,52 @@ public class ItemCollector : MonoBehaviour
             
 
         }
-
+        
     }
 
     void Update(){
         m_playerMovements = GameObject.Find("Player").GetComponent<PlayerMovements>();
         UseItem();
-
+        if(m_playerMovements.getDoubleJumpActive()){
+            m_playerMovements.setHasDoubleJump(false); 
+            m_playerMovements.setDoubleJumpActive(); 
+        }
+        if(m_playerMovements.getDashActive()){
+            m_playerMovements.setHasDash(false); 
+            m_playerMovements.setDashActive(); 
+        }
+            
+        
+        
     }
 
+
+
     private void UseItem(){
+       
 
         if(pic == 0){
            
             picItem.SetActive(false); 
+            
+           
         }else{
+            
             if(Input.GetKeyDown("a")){
-                picItem.SetActive(false);
+                pic--; 
+                totalItem--; 
+               
+                
+                
+                if(pic < 0){
+                    picItem.SetActive(false);
+                    pic = 0; 
+                }
+                
+
                 m_playerMovements.setHasDoubleJump(true); 
+               
+                 
                 //m_playerMovements.Jump();
                 
             }
@@ -85,13 +116,32 @@ public class ItemCollector : MonoBehaviour
             canonItem.SetActive(false); 
         }else{
             if(Input.GetKeyDown("e")){
-                canonItem.SetActive(false);
+                canon--; 
+                totalItem--; 
+                Debug.Log("total" + totalItem);
+                if(canon < 0){
+                    canonItem.SetActive(false); 
+                    
+                    canon = 0; 
+                }
+                
                 m_playerMovements.setHasDash(true); 
+                
+                 
+
+                
+                
+                
                 //m_playerMovements.Jump();
                 
             }
             
         }
+       
+
 
     }
+
+    
+    
 }

@@ -15,6 +15,8 @@ public class PlayerMovements : MonoBehaviour
     private bool m_facingRight;
     private bool m_canMoveToLeft;
     private bool m_canMoveToRight;
+    private bool doubleJumpActive; 
+    private bool dashActive;
 
     private float m_movementSpeed = 6f;
     private float m_checkRadius = 0.3f;
@@ -54,6 +56,8 @@ public class PlayerMovements : MonoBehaviour
         m_isDashing = false;
         m_facingRight = true;
         m_animator.SetFloat("initDashCount", m_initDashTime);
+        doubleJumpActive = false; 
+        dashActive = false; 
 
         respawnPoint = transform.position;
     }
@@ -144,6 +148,7 @@ public class PlayerMovements : MonoBehaviour
                 m_animator.SetBool("isJumping", true);
                 m_animator.SetBool("isFalling", false);
                 m_animator.SetBool("isDoubleJumping", true);
+                doubleJumpActive = true; 
             }
             else
             {
@@ -198,6 +203,7 @@ public class PlayerMovements : MonoBehaviour
                 m_animator.SetBool("isJumping", false);
                 m_animator.SetBool("isFalling", false);
                 m_animator.SetBool("isDashing", true);
+                dashActive = true; 
                 if (m_animator.GetFloat("initDashCount") < 0)
                 {
                     m_rigidBody.gravityScale = 3.6f;
@@ -276,10 +282,30 @@ public class PlayerMovements : MonoBehaviour
     public void setHasDoubleJump(bool doubleJump){
         m_playerHasDoubleJump = doubleJump;
         Jump();
+        
+    }
+
+    public bool getDoubleJumpActive(){
+        return doubleJumpActive; 
+    }
+
+    public void setDoubleJumpActive(){
+        doubleJumpActive = false; 
     }
 
     public void setHasDash(bool dash){
         m_playerHasDashing = dash;
         Dash();
+        
     }
+
+    public bool getDashActive(){
+        return dashActive; 
+    }
+
+    public void setDashActive(){
+        dashActive = false; 
+    }
+
+
 }
