@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PikeAnimation : MonoBehaviour
+public class enemiesRegrettingAnimation : MonoBehaviour
 {
 
     public Animator m_animator;
-    private bool isPikeHurt = false;
 
     private float timerDuration = 1f;
     private float currentTimer;
@@ -25,12 +24,12 @@ public class PikeAnimation : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentTimer <= 0 && m_animator.GetBool("isHurt"))
+        if (currentTimer <= 0 && m_animator.GetBool("isRegretting"))
         {
-            m_animator.SetBool("isHurt", false);
+            m_animator.SetBool("isRegretting", false);
             Destroy(gameObject.transform.parent.gameObject);
         }
-        else if (currentTimer > 0 && m_animator.GetBool("isHurt"))
+        else if (currentTimer > 0 && m_animator.GetBool("isRegretting"))
         {
             currentTimer -= Time.deltaTime;
         }
@@ -38,9 +37,9 @@ public class PikeAnimation : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        m_animator.SetBool("isHurt", true);
+        m_animator.SetBool("isRegretting", true);
 
-        if (m_animator.GetBool("isHurt"))
+        if (m_animator.GetBool("isRegretting"))
         {
             currentTimer = timerDuration;
         }
