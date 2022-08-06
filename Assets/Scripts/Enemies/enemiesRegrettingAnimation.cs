@@ -16,7 +16,6 @@ public class enemiesRegrettingAnimation : MonoBehaviour
     void Start()
     {
         currentTimer = timerDuration;
-
     }
 
     // Update is called once per frame
@@ -32,7 +31,6 @@ public class enemiesRegrettingAnimation : MonoBehaviour
             m_animator.SetBool("isRegretting", false);
             Destroy(gameObject.transform.parent.gameObject);
             GameObject picObject = Instantiate(screenUwu) as GameObject;
-            //Time.timeScale = 0;
 
         }
         else if (currentTimer > 0 && m_animator.GetBool("isRegretting"))
