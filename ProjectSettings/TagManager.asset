@@ -9,6 +9,7 @@ TagManager:
   - CanonItem
   - Canon
   - Checkpoint
+  - Health
   layers:
   - Default
   - TransparentFX
