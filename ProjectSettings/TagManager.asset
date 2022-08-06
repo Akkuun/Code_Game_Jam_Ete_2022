@@ -12,6 +12,8 @@ TagManager:
   - MovingCheckpoint
   - Obstacle
   - Health
+  - UwuScreen
+  - PicTuto
   layers:
   - Default
   - TransparentFX
