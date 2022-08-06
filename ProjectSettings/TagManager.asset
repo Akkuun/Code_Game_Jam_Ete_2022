@@ -9,7 +9,8 @@ TagManager:
   - CanonItem
   - Canon
   - Checkpoint
-  - UwuScreen
+  - MovingCheckpoint
+  - Obstacle
   layers:
   - Default
   - TransparentFX
