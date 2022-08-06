@@ -38,10 +38,9 @@ public class healthManagment : MonoBehaviour
 
         
         
-       Debug.Log("DOUBLEEEEEE"+ player.getIsDoubleJumping());
-       Debug.Log("DONE"+jumpDone);
+        
         //si le joueur a fait son double saut et que son saut est pas  fini 
-        if (player.getIsDoubleJumping()  && !jumpDone ) TakeDamage(20); jumpDone=true;
+        if (player.getIsDoubleJumping()  && !jumpDone && !player.getIsFalling() ) TakeDamage(20); jumpDone=true;
         
         //si le perso est au sol et qu'il ne saute pas alors son saut est fini
         if ( player.getIsFalling() && jumpDone ) jumpDone =false;
