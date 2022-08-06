@@ -18,9 +18,9 @@ public class healthManagment : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-   player =GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovements>();      
-    currentLifePoint = maxLifePoint; 
-    healthBar.fillAmount=currentLifePoint/100;
+        player =GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovements>();      
+        currentLifePoint = maxLifePoint; 
+        healthBar.fillAmount=currentLifePoint/100;
     
         
     }
