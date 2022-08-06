@@ -10,14 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8050786337913120468}
   - component: {fileID: 8050786337913120459}
-  - component: {fileID: 8050786337913120458}
+  - component: {fileID: 2782945132561692474}
   m_Layer: 0
   m_Name: Small Bullet
   m_TagString: CanonItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8050786337913120468
 Transform:
   m_ObjectHideFlags: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8050786337913120458
+--- !u!114 &2782945132561692474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,6 +94,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8050786337913120457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48d7e879fda58174797bec5a129fb26c, type: 3}
+  m_Script: {fileID: 11500000, guid: aaeff0d98c6357f4996c2e170b63ebc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_angularSpeed: 2
+  m_rotationRadius: 1
