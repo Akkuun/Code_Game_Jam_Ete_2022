@@ -33,7 +33,7 @@ public class ItemCollector : MonoBehaviour
  
             if(pic == 0){
                 pic+=1; 
-                 print(collision.gameObject.layer);
+            
                 if(collision.transform.gameObject.layer == 6){ //le fait disparaitre
                     collision.gameObject.SetActive(false);
                 }
@@ -42,12 +42,16 @@ public class ItemCollector : MonoBehaviour
             
         }
         if(collision.gameObject.CompareTag("Canon")){
+          
             if(canon == 0){
                 canon+=1; 
                 
                 canonItem.SetActive(true);
+        
+                
                 if(collision.transform.gameObject.layer == 6){
-                    collision.gameObject.SetActive(false);
+                    //récupère le parent parent (bullet = children, children)
+                    collision.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false); 
                 }
                 
             }

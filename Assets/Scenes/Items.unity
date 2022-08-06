@@ -600,6 +600,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canon (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3685464043562672579, guid: 2635ba952b7829943bc82e0734a133ba, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685464043562672579, guid: 2635ba952b7829943bc82e0734a133ba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3685464043562672579, guid: 2635ba952b7829943bc82e0734a133ba, type: 3}
+      propertyPath: m_TagString
+      value: Canon
+      objectReference: {fileID: 0}
     - target: {fileID: 3685464043562672580, guid: 2635ba952b7829943bc82e0734a133ba, type: 3}
       propertyPath: m_RootOrder
       value: 1
