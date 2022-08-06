@@ -689,6 +689,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pike
       objectReference: {fileID: 0}
+    - target: {fileID: 2419124073735118135, guid: 60a30c85f0f131f47a0e9ab18f697ac6, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60a30c85f0f131f47a0e9ab18f697ac6, type: 3}
 --- !u!1 &1487325709
@@ -960,7 +964,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 2419124073735118120, guid: 60a30c85f0f131f47a0e9ab18f697ac6, type: 3}
   m_PrefabInstance: {fileID: 1339844639}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2135362347
+--- !u!114 &2135362351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
