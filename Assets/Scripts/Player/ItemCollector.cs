@@ -32,11 +32,11 @@ public class ItemCollector : MonoBehaviour
             if (collision.gameObject.CompareTag("Pic"))
             { //récupère le type d'obstacle
                 pic += 1;
-                healthBar.degat();
+                healthBar.resetLife();
                
                 GameObject picObject = Instantiate(picItemPrefab) as GameObject;
 
-                if (collision.transform.gameObject.layer == 6)
+                 if (collision.transform.gameObject.layer == 6)
                 {
                     //récupère le parent parent (pike = children, children)
                     collision.gameObject.transform.parent.gameObject.SetActive(false);
@@ -45,7 +45,8 @@ public class ItemCollector : MonoBehaviour
             if (collision.gameObject.CompareTag("Canon"))
             {
                 canon += 1;
-                healthBar.degat();
+                healthBar.resetLife();
+              
 
                 GameObject canonObject = Instantiate(canonItemPrefab) as GameObject;
 
@@ -63,7 +64,10 @@ public class ItemCollector : MonoBehaviour
                     
                 }
             }
+             
         }
+
+        
     }
 
     public void UseItem(string _item)
