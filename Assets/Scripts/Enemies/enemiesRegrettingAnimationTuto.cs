@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemiesRegrettingAnimation : MonoBehaviour
+public class enemiesRegrettingAnimationTuto : MonoBehaviour
 {
     public Animator m_animator;
 
     private float timerDuration = 1f;
     private float currentTimer;
 
-    //public GameObject gameObjectToDestroy;
+    public GameObject screenUwu;
 
     // Start is called before the first frame update
     void Start()
@@ -28,9 +28,8 @@ public class enemiesRegrettingAnimation : MonoBehaviour
         if (currentTimer <= 0 && m_animator.GetBool("isRegretting"))
         {
             m_animator.SetBool("isRegretting", false);
-            //Destroy(gameObjectToDestroy.transform.parent.gameObject);
             Destroy(gameObject.transform.parent.gameObject);
-            Debug.Log(gameObject.transform.parent.name);
+            GameObject picObject = Instantiate(screenUwu) as GameObject;
 
         }
         else if (currentTimer > 0 && m_animator.GetBool("isRegretting"))
