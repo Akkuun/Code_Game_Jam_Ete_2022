@@ -70,7 +70,6 @@ public class ItemCollector : MonoBehaviour
     private void UseItem(){
 
         if(pic == 0){
-           
             picItem.SetActive(false); 
         }else{
             if(Input.GetKeyDown("a")){
