@@ -38,4 +38,8 @@ public class HealthBar : MonoBehaviour
         currentLifePoint = maxLifePoint; 
         slider.value = maxLifePoint;
     }
+
+    public bool getIsDead(){
+        return isDead; 
+    }
 }
