@@ -15,7 +15,8 @@ public class PlayerMovements : MonoBehaviour
     private bool m_facingRight;
     private bool m_isDoubleJumping;
     private bool m_isFalling;
-
+    private bool soundPlayedOnce =false;
+    private bool soundPlayedTwice =false;
     private bool m_canMoveToLeft;
     private bool m_canMoveToRight;
 
@@ -36,7 +37,10 @@ public class PlayerMovements : MonoBehaviour
     private Vector3 respawnPoint;
 
     private ItemCollector m_itemCollector;
-    
+
+
+    public AudioSource jumpSound;
+
     //-------------------------------------
 
     public LayerMask m_groundLayer;
@@ -128,6 +132,7 @@ public class PlayerMovements : MonoBehaviour
     private void Jump()
     {
         float jumpInput = Input.GetAxisRaw("Jump");
+        
 
         //Au sol, il reg�n�re son double jump
         if (m_isGrounded && (m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")))
@@ -144,10 +149,15 @@ public class PlayerMovements : MonoBehaviour
 
             m_isFalling = true;
             m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, Vector2.up.y * m_jumpForce);
+               
+
+            
         }
         //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
+                
+        
             //Si il a la capacité de double jump et qu'il ne peut plus sauter
             if((m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) && !m_canDoubleJump)
             {
@@ -160,7 +170,7 @@ public class PlayerMovements : MonoBehaviour
                 m_isFalling=false;
                 m_animator.SetBool("isDoubleJumping", true);
                 m_isDoubleJumping = true;
-
+                
               
             }
             else
@@ -183,6 +193,7 @@ public class PlayerMovements : MonoBehaviour
             m_isDoubleJumping=true;
             m_isFalling=true;
             m_isDoubleJumping=true;
+            
             
         }
         //Si il saute pas mais qu'il est dans les airs
@@ -220,6 +231,7 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isJumping", true);
             m_animator.SetBool("isDoubleJumping", false);
             m_isDoubleJumping = false;
+        
         }
 
     }
@@ -287,6 +299,8 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetFloat("initDashCount", m_initDashTime);
             m_animator.SetBool("isFalling", false);
             m_isFalling=false;
+            soundPlayedOnce = true;
+            soundPlayedTwice = true;
         }
     }
 

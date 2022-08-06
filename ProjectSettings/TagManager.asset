@@ -9,6 +9,8 @@ TagManager:
   - CanonItem
   - Canon
   - Checkpoint
+  - MovingCheckpoint
+  - Obstacle
   - Health
   layers:
   - Default
