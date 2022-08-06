@@ -7,8 +7,8 @@ public class ItemCollector : MonoBehaviour
 {
     private int pic = 0; 
     private int canon = 0; 
-    [SerializeField] private GameObject picItem; 
-    [SerializeField] private GameObject canonItem;
+    [SerializeField] private GameObject picItemPrefab; 
+    [SerializeField] private GameObject canonItemPrefab;
 
     private PlayerMovements m_playerMovements; 
     
@@ -25,19 +25,17 @@ public class ItemCollector : MonoBehaviour
     }*/
    
     private void OnTriggerEnter2D(Collider2D collision){
-        
-       
-        if(collision.gameObject.CompareTag("Pic")){ //récupère le type d'obstacle
 
-       
- 
-            if(pic == 0){
-                pic+=1;
+        if (pic + canon < 5)
+        {
+            if (collision.gameObject.CompareTag("Pic"))
+            { //récupère le type d'obstacle
+                pic += 1;
                 /*
                 if(collision.transform.gameObject.layer == 6){ //le fait disparaitre
                     collision.gameObject.SetActive(false);
-                }
-                picItem.SetActive(true);*/
+                }*/
+                GameObject picObject = Instantiate(picItemPrefab) as GameObject;
 
                 if (collision.transform.gameObject.layer == 6)
                 {
@@ -45,26 +43,20 @@ public class ItemCollector : MonoBehaviour
                     collision.gameObject.transform.parent.gameObject.SetActive(false);
                 }
             }
-            
-        }
-        if(collision.gameObject.CompareTag("Canon")){
-          
-            if(canon == 0){
-                canon+=1; 
-                
-                canonItem.SetActive(true);
-        
-                
-                if(collision.transform.gameObject.layer == 6){
+            if (collision.gameObject.CompareTag("Canon"))
+            {
+                canon += 1;
+
+                GameObject canonObject = Instantiate(canonItemPrefab) as GameObject;
+
+
+                if (collision.transform.gameObject.layer == 6)
+                {
                     //récupère le parent parent (bullet = children, children)
                     collision.gameObject.transform.parent.gameObject.SetActive(false);
                 }
-                
             }
-            
-
         }
-
     }
 
     void Update(){
@@ -76,10 +68,10 @@ public class ItemCollector : MonoBehaviour
     private void UseItem(){
 
         if(pic == 0){
-            picItem.SetActive(false); 
+            //picItem.SetActive(false); 
         }else{
             if(Input.GetKeyDown("a")){
-                picItem.SetActive(false);
+                //picItem.SetActive(false); J'enlève sinon on voit plus le pic qui nous suit, je ferais la maj dans le player movements
                 m_playerMovements.setHasDoubleJump(true); 
                 //m_playerMovements.Jump();
                 
@@ -87,10 +79,10 @@ public class ItemCollector : MonoBehaviour
         }
 
         if(canon == 0){
-            canonItem.SetActive(false); 
+            //canonItem.SetActive(false); 
         }else{
             if(Input.GetKeyDown("e")){
-                canonItem.SetActive(false);
+                //canonItem.SetActive(false); pareil
                 m_playerMovements.setHasDash(true); 
                 //m_playerMovements.Jump();
                 

@@ -271,7 +271,10 @@ public class PlayerMovements : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            collision.gameObject.SetActive(false);
+            if(!collision.gameObject.CompareTag("Canon") || !collision.gameObject.CompareTag("Pic"))
+            {
+                collision.gameObject.SetActive(false);
+            }
             transform.position = respawnPoint;
         }
     }
