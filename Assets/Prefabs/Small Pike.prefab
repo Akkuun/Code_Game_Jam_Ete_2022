@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6883001187677431811}
   - component: {fileID: 6883001187677431812}
-  - component: {fileID: 6883001187677431813}
   - component: {fileID: 4485150073354850736}
   m_Layer: 0
   m_Name: Small Pike
@@ -18,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6883001187677431811
 Transform:
   m_ObjectHideFlags: 0
@@ -86,18 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6883001187677431813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6883001187677431814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6607a5b2106244e94478885ce1603c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4485150073354850736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaeff0d98c6357f4996c2e170b63ebc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rotationCenter: {fileID: 148684457532158716, guid: 8635d426776bb774d9249cf5488c17ce, type: 3}
   m_angularSpeed: 2
   m_rotationRadius: 1
