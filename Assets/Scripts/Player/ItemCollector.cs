@@ -59,8 +59,15 @@ public class ItemCollector : MonoBehaviour
 
                 if (collision.transform.gameObject.layer == 6)
                 {
+                    
                     //récupère le parent parent (bullet = children, children)
-                    collision.gameObject.transform.parent.gameObject.SetActive(false);
+                    if(collision.gameObject.name == "Bullet"){
+                        collision.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false); 
+            
+                    }else{
+                        collision.gameObject.transform.parent.gameObject.SetActive(false);
+                    }
+                    
                 }
             }
         }
