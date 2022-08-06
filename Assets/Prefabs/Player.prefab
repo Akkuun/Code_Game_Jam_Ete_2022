@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 148684457532158718}
   - component: {fileID: 148684457532158713}
   - component: {fileID: 8031851985691737830}
+  - component: {fileID: 3095430849014404169}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -223,3 +224,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   picItemPrefab: {fileID: 6883001187677431814, guid: fc1eb86b56c9e10438006f9c3b660b3b, type: 3}
   canonItemPrefab: {fileID: 8050786337913120457, guid: b62728bd3f432c5458512a94c760fee9, type: 3}
+--- !u!114 &3095430849014404169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148684457532148992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 7faec2a367d36a5b83f9f96dc735b19b00000000
+  m_ShapePath:
+  - {x: -0.12549151, y: -0.39140803, z: 0}
+  - {x: -0.103032306, y: -0.02129728, z: 0}
+  - {x: -0.0105511425, y: 0.05674127, z: 0}
+  - {x: 0.084342144, y: -0.022709671, z: 0}
+  - {x: 0.102431916, y: -0.3915538, z: 0}
+  m_ShapePathHash: -1207279035
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 57464
