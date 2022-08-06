@@ -13,6 +13,9 @@ public class PlayerMovements : MonoBehaviour
     private bool m_hasDashed;
     private bool m_canDoubleJump;
     private bool m_facingRight;
+    private bool m_isDoubleJumping;
+    private bool m_isFalling;
+   
 
     private float m_movementSpeed = 6f;
     private float m_checkRadius = 0.05f;
@@ -40,6 +43,8 @@ public class PlayerMovements : MonoBehaviour
 
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
+
+    
 
 
     // Start is called before the first frame update
@@ -115,32 +120,40 @@ public class PlayerMovements : MonoBehaviour
         float jumpInput = Input.GetAxisRaw("Jump");
 
         //Au sol, il regénère son double jump
-        if (m_isGrounded == true && m_playerHasDoubleJump)
+        if (m_isGrounded && m_playerHasDoubleJump)
         {
             m_canDoubleJump = true;
         }
         //Si il est au sol et qu'il saute
-        if(m_isGrounded == true && jumpInput == 1) 
+        if(m_isGrounded && jumpInput == 1) 
         {
             m_animator.SetBool("isJumping", false);
             m_animator.SetBool("isFalling", false);
             m_isJumping = true;
             m_currentJumpTime = m_maxJumpTime;
             m_rigidBody.velocity = Vector2.up * m_jumpForce;
+            m_isFalling = true;
         }
         //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
-            if(m_playerHasDoubleJump && m_canDoubleJump == false)
+
+            if(m_playerHasDoubleJump && !m_canDoubleJump)
             {
                 m_animator.SetBool("isJumping", true);
                 m_animator.SetBool("isFalling", false);
+                m_isFalling=false;
                 m_animator.SetBool("isDoubleJumping", true);
+                m_isDoubleJumping = true;
+              
             }
             else
             {
                 m_animator.SetBool("isJumping", true);
                 m_animator.SetBool("isFalling", false);
+                m_isFalling=false;
+                m_isDoubleJumping = !m_isDoubleJumping;
+               
             }
             
             m_rigidBody.velocity = Vector2.up * m_jumpForce;
@@ -150,10 +163,15 @@ public class PlayerMovements : MonoBehaviour
         if((!m_isGrounded && m_currentJumpTime < 0) ||(!m_isGrounded && jumpInput == 0))
         {
             m_animator.SetBool("isFalling", true);
+            m_isDoubleJumping=true;
+            m_isFalling=true;
+            m_isDoubleJumping=true;
+            
         }
         //Si il saute pas mais qu'il est dans les airs
         if (jumpInput == 0 && !m_isGrounded)
         {
+        m_isDoubleJumping=false;
             //Si le joueur a la capacité pour double sauter et peut double sauter
             if (m_playerHasDoubleJump && m_canDoubleJump)
             {
@@ -174,7 +192,9 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isFalling", false);
             m_animator.SetBool("isJumping", false);
             m_animator.SetBool("isDoubleJumping", false);
-            m_isJumping = false;
+            m_isDoubleJumping=false;
+            m_isFalling=false;
+            m_isDoubleJumping=false;
         }
     }
 
@@ -189,6 +209,7 @@ public class PlayerMovements : MonoBehaviour
                 m_animator.SetBool("isJumping", false);
                 m_animator.SetBool("isFalling", false);
                 m_animator.SetBool("isDashing", true);
+                m_isFalling=false;
                 if (m_animator.GetFloat("initDashCount") < 0)
                 {
                     m_rigidBody.gravityScale = 3.6f;
@@ -197,6 +218,7 @@ public class PlayerMovements : MonoBehaviour
                         m_animator.SetBool("isDashing", false);
                         m_animator.SetFloat("initDashCount", m_initDashTime);
                         m_animator.SetBool("isFalling", true);
+                        m_isFalling=true;
                         m_isDashing = false;
                         m_hasDashed = true;
                         m_rigidBody.velocity = Vector2.zero;
@@ -233,6 +255,7 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isDashing", false);
             m_animator.SetFloat("initDashCount", m_initDashTime);
             m_animator.SetBool("isFalling", false);
+            m_isFalling=false;
         }
     }
 
@@ -253,4 +276,40 @@ public class PlayerMovements : MonoBehaviour
 
         m_facingRight = !m_facingRight;
     }
+
+
+    
+
+    public bool getHasDashed(){
+
+    return m_hasDashed;
+    }
+
+    public bool getIsGrounded(){
+
+    return m_isGrounded;
+    }
+
+    public bool getIsDoubleJumping(){
+
+    return m_isDoubleJumping;
+    }
+
+    public bool getIsJumping(){
+        return m_isJumping;
+    }
+
+    public bool getHasDoubleJumped(){
+
+    return m_playerHasDoubleJump;
+
+    }
+
+    public bool getIsFalling(){
+        return m_isFalling;
+    }
+    //doit faire avec hasdoublejumped plutot
+
+
+
 }
