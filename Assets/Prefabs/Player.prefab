@@ -221,5 +221,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a1ac0216acead04c94c6e2333e91895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  picItem: {fileID: 0}
-  canonItem: {fileID: 0}
+  picItemPrefab: {fileID: 6883001187677431814, guid: fc1eb86b56c9e10438006f9c3b660b3b, type: 3}
+  canonItemPrefab: {fileID: 8050786337913120457, guid: b62728bd3f432c5458512a94c760fee9, type: 3}
