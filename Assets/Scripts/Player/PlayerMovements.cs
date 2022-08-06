@@ -315,6 +315,9 @@ public class PlayerMovements : MonoBehaviour
             }
             transform.position = respawnPoint;
         }
+
+        if(collision.gameObject.tag == "Plateform") transform.parent=collision.transform;
+         if(collision.gameObject.tag != "Plateform") transform.parent=null;
     }
 
     //Trigger detection, if the character trigger a checkpoint, his respawn point will be the point of trigger
@@ -374,4 +377,11 @@ public class PlayerMovements : MonoBehaviour
         m_playerHasDashing = dash;
         Dash();
     }
+
+    
+    
+  
+   
+    
+    
 }
