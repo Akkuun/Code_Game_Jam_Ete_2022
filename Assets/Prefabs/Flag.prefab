@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1893172704334615972}
   - component: {fileID: 1893172704334615971}
   - component: {fileID: 5960007024502440750}
+  - component: {fileID: 8344763379555643821}
   m_Layer: 0
   m_Name: Flag
   m_TagString: Checkpoint
@@ -132,3 +133,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9929686, y: 3.1496813}
   m_EdgeRadius: 0
+--- !u!114 &8344763379555643821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893172704334615970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 7faec2a367d36a5b83f9f96dc735b19b00000000
+  m_ShapePath:
+  - {x: 0.0009011887, y: -0.5011838, z: 0}
+  - {x: 0.00027933158, y: 0.43804434, z: 0}
+  - {x: 0.12515865, y: 0.43714267, z: 0}
+  - {x: 0.12481257, y: -0.50170517, z: 0}
+  - {x: 0.31252652, y: -0.5006725, z: 0}
+  - {x: 0.31162745, y: -0.5633866, z: 0}
+  - {x: 0.37527493, y: -0.56254476, z: 0}
+  - {x: 0.37393773, y: -0.6274836, z: 0}
+  - {x: -0.24974653, y: -0.62608904, z: 0}
+  - {x: -0.24982244, y: -0.56218266, z: 0}
+  - {x: -0.18731554, y: -0.5628159, z: 0}
+  - {x: -0.18742654, y: -0.5004065, z: 0}
+  m_ShapePathHash: -98786032
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -185342
