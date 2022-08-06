@@ -10,8 +10,9 @@ public class ItemCollector : MonoBehaviour
     [SerializeField] private GameObject picItemPrefab; 
     [SerializeField] private GameObject canonItemPrefab;
 
-    private PlayerMovements m_playerMovements; 
-    
+    private bool m_picHasBeenUsed;
+    private bool m_canonHasBeenUsed;
+
     //Détection de la collision avec un obstacle et désactivation de celui-ci
     /*private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -23,7 +24,13 @@ public class ItemCollector : MonoBehaviour
             collision.gameObject.SetActive(false);
         }
     }*/
-   
+
+    void Start()
+    {
+        m_picHasBeenUsed = false;
+        m_canonHasBeenUsed = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision){
 
         if (pic + canon < 5)
@@ -59,36 +66,61 @@ public class ItemCollector : MonoBehaviour
         }
     }
 
-    void Update(){
-        m_playerMovements = GameObject.Find("Player").GetComponent<PlayerMovements>();
-        UseItem();
-
+    public void UseItem(string _item)
+    {
+        if (_item.Equals("pic"))
+        {
+            GameObject[] smallPics = GameObject.FindGameObjectsWithTag("PicItem");
+            Destroy((GameObject)smallPics.GetValue(0));
+            m_picHasBeenUsed = true;
+            pic -= 1;
+        }
+        else if (_item.Equals("canon"))
+        {
+            GameObject[] smallCanons = GameObject.FindGameObjectsWithTag("CanonItem");
+            Destroy(smallCanons[0]);
+            m_canonHasBeenUsed = true;
+            canon -= 1;
+        }
     }
 
-    private void UseItem(){
-
-        if(pic == 0){
-            //picItem.SetActive(false); 
-        }else{
-            if(Input.GetKeyDown("a")){
-                //picItem.SetActive(false); J'enlève sinon on voit plus le pic qui nous suit, je ferais la maj dans le player movements
-                m_playerMovements.setHasDoubleJump(true); 
-                //m_playerMovements.Jump();
-                
-            }
+    public bool CanUseItem(string _item)
+    {
+        if(_item.Equals("pic"))
+        {
+            return pic >= 1;
         }
+        if (_item.Equals("canon"))
+        {
+            return canon >= 1;
+        }
+        return false;
+    }
 
-        if(canon == 0){
-            //canonItem.SetActive(false); 
-        }else{
-            if(Input.GetKeyDown("e")){
-                //canonItem.SetActive(false); pareil
-                m_playerMovements.setHasDash(true); 
-                //m_playerMovements.Jump();
-                
-            }
+    public bool IsItemUsed(string _item)
+    {
+        if (_item.Equals("pic"))
+        {
+            return m_picHasBeenUsed;
+
+        }
+        if (_item.Equals("canon"))
+        {
+            return m_canonHasBeenUsed;
+        }
+        return false;
+    }
+
+    public void ChangeUsedItem(string _item)
+    {
+        if (_item.Equals("pic"))
+        {
+            m_picHasBeenUsed = false;
             
         }
-
+        if (_item.Equals("canon"))
+        {
+            m_canonHasBeenUsed = false;
+        }
     }
 }
