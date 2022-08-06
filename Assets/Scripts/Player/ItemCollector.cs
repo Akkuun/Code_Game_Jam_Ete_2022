@@ -32,12 +32,18 @@ public class ItemCollector : MonoBehaviour
        
  
             if(pic == 0){
-                pic+=1; 
-            
+                pic+=1;
+                /*
                 if(collision.transform.gameObject.layer == 6){ //le fait disparaitre
                     collision.gameObject.SetActive(false);
                 }
-                picItem.SetActive(true);
+                picItem.SetActive(true);*/
+
+                if (collision.transform.gameObject.layer == 6)
+                {
+                    //récupère le parent parent (pike = children, children)
+                    collision.gameObject.transform.parent.gameObject.SetActive(false);
+                }
             }
             
         }
@@ -51,7 +57,7 @@ public class ItemCollector : MonoBehaviour
                 
                 if(collision.transform.gameObject.layer == 6){
                     //récupère le parent parent (bullet = children, children)
-                    collision.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false); 
+                    collision.gameObject.transform.parent.gameObject.SetActive(false);
                 }
                 
             }
