@@ -9,6 +9,7 @@ TagManager:
   - CanonItem
   - Canon
   - Checkpoint
+  - UwuScreen
   layers:
   - Default
   - TransparentFX

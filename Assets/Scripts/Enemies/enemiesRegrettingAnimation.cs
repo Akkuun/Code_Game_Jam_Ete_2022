@@ -10,16 +10,19 @@ public class enemiesRegrettingAnimation : MonoBehaviour
     private float timerDuration = 1f;
     private float currentTimer;
 
+    public GameObject screenUwu;
+
     // Start is called before the first frame update
     void Start()
     {
         currentTimer = timerDuration;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void FixedUpdate()
@@ -28,11 +31,14 @@ public class enemiesRegrettingAnimation : MonoBehaviour
         {
             m_animator.SetBool("isRegretting", false);
             Destroy(gameObject.transform.parent.gameObject);
+            GameObject picObject = Instantiate(screenUwu) as GameObject;
+
         }
         else if (currentTimer > 0 && m_animator.GetBool("isRegretting"))
         {
             currentTimer -= Time.deltaTime;
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
