@@ -265,6 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 372965013952832636}
   - component: {fileID: 4147967725174986953}
+  - component: {fileID: 4838412301799845068}
   m_Layer: 0
   m_Name: Background lueure
   m_TagString: Untagged
@@ -366,6 +367,18 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &4838412301799845068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3781312422491135333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fea289b2f62094faac76c95adabce2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5512159739400347000
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,8 +427,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 0.80389917, b: 0.5896226, a: 1}
-  m_Intensity: 0.1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 7faec2a367d36a5b83f9f96dc735b19b00000000
@@ -587,7 +600,7 @@ MonoBehaviour:
   - {x: 0.18411592, y: 0.06386228, z: 0}
   m_ShapePathHash: -1367164160
   m_Mesh: {fileID: 0}
-  m_InstanceId: 71144
+  m_InstanceId: 92600
 --- !u!1 &7980743289848517844
 GameObject:
   m_ObjectHideFlags: 0
