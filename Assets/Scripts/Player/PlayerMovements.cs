@@ -72,6 +72,7 @@ public class PlayerMovements : MonoBehaviour
         }
         if (m_playerHasDashing)
         {
+           
             if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
             {
                 HorizontalMovements();
@@ -270,5 +271,15 @@ public class PlayerMovements : MonoBehaviour
         gameObject.transform.localScale = currentScale;
 
         m_facingRight = !m_facingRight;
+    }
+
+    public void setHasDoubleJump(bool doubleJump){
+        m_playerHasDoubleJump = doubleJump;
+        Jump();
+    }
+
+    public void setHasDash(bool dash){
+        m_playerHasDashing = dash;
+        Dash();
     }
 }
