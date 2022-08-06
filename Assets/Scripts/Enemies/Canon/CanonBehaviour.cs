@@ -48,7 +48,7 @@ public class CanonBehaviour : MonoBehaviour
         GameObject bullet = Instantiate(m_bulletPrefab, transform) as GameObject;
         if(transform.localScale.x == -1)
         {
-            bullet.GetComponent<BulletBehaviour>().ChangeDirection();
+            bullet.GetComponentInChildren<BulletBehaviour>().ChangeDirection();
         }
     }
 }
