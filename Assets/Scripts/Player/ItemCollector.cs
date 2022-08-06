@@ -28,10 +28,12 @@ public class ItemCollector : MonoBehaviour
         
        
         if(collision.gameObject.CompareTag("Pic")){ //récupère le type d'obstacle
+
+       
  
             if(pic == 0){
                 pic+=1; 
-                
+                 print(collision.gameObject.layer);
                 if(collision.transform.gameObject.layer == 6){ //le fait disparaitre
                     collision.gameObject.SetActive(false);
                 }
