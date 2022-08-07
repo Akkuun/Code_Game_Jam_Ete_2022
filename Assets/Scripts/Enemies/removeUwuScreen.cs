@@ -21,7 +21,11 @@ public class removeUwuScreen : MonoBehaviour
 
         if (Input.GetAxis("Fire1") > 0)
         {
+            /*GameObject bg = GameObject.Find("BackgroundMusic");
+            bg.SetActive(true);*/
             gameObject.SetActive(false);
+            AudioSource bg = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
+            bg.Play();
 
             arrow = Instantiate(item) as GameObject;
             arrow.transform.SetParent(player.transform);
