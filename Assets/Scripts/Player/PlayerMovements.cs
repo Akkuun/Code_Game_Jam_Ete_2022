@@ -36,6 +36,11 @@ public class PlayerMovements : MonoBehaviour
     private RaycastHit2D hit2D;
 
     private Vector3 respawnPoint;
+    private Transform spawnPoint;
+    private bool isMovingSpawnPointTrigger;
+
+    private float timerDuration = 1f;
+    private float currentTimer;
 
     private ItemCollector m_itemCollector;
 
@@ -63,37 +68,58 @@ public class PlayerMovements : MonoBehaviour
         m_isDashing = false;
         m_facingRight = true;
         m_animator.SetFloat("initDashCount", m_initDashTime);
-        
 
         respawnPoint = transform.position;
+        spawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
+
+        currentTimer = timerDuration;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
-        if(m_isGrounded)
+        if (!m_animator.GetBool("isDying"))
         {
-            m_animator.SetBool("isJumping", false);
-        }
-        else if (!m_animator.GetBool("isDashing"))
-        {
-            m_animator.SetBool("isJumping", true);
-        }
-        if (m_playerHasDashing || m_itemCollector.CanUseItem("canon") || m_isDashing)
-        {
-           
-            if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
+            if (m_isGrounded)
+            {
+                m_animator.SetBool("isJumping", false);
+            }
+            else if (!m_animator.GetBool("isDashing"))
+            {
+                m_animator.SetBool("isJumping", true);
+            }
+            if (m_playerHasDashing || m_itemCollector.CanUseItem("canon") || m_isDashing)
+            {
+
+                if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
+                {
+                    HorizontalMovements();
+                    Jump();
+                }
+                Dash();
+            }
+            else
             {
                 HorizontalMovements();
                 Jump();
             }
-            Dash();
         }
-        else
+
+        if (currentTimer <= 0 && m_animator.GetBool("isDying") && !isMovingSpawnPointTrigger)
         {
-            HorizontalMovements();
-            Jump();
+            transform.position = respawnPoint;
+            m_animator.SetBool("isDying", false);
+        }
+        else if (currentTimer <= 0 && m_animator.GetBool("isDying") && isMovingSpawnPointTrigger)
+        {
+            transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
+            m_animator.SetBool("isDying", false);
+        }
+
+        else if (currentTimer > 0 && m_animator.GetBool("isDying"))
+        {
+            currentTimer -= Time.deltaTime;
         }
     }
 
@@ -322,11 +348,18 @@ public class PlayerMovements : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            if(!collision.gameObject.CompareTag("Canon") || !collision.gameObject.CompareTag("Pic"))
+            m_animator.SetBool("isDying", true);
+            Debug.Log("I'm dead");
+
+            if (m_animator.GetBool("isDying"))
+            {
+                currentTimer = timerDuration;
+            }
+
+            if (!collision.gameObject.CompareTag("Canon") || !collision.gameObject.CompareTag("Pic"))
             {
                 collision.gameObject.SetActive(false);
             }
-            transform.position = respawnPoint;
         }
 
         if(collision.gameObject.tag == "Plateform") transform.parent=collision.transform;
@@ -339,6 +372,10 @@ public class PlayerMovements : MonoBehaviour
         if (collision.tag == "Checkpoint")
         {
             respawnPoint = transform.position;
+        }
+        else if (collision.tag == "MovingCheckpoint")
+        {
+            isMovingSpawnPointTrigger = true;
         }
     }
 
