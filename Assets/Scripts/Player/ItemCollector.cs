@@ -36,11 +36,11 @@ public class ItemCollector : MonoBehaviour
                
                 GameObject picObject = Instantiate(picItemPrefab) as GameObject;
 
-                 if (collision.transform.gameObject.layer == 6)
+                 /*if (collision.transform.gameObject.layer == 6)
                 {
                     //récupère le parent parent (pike = children, children)
                     collision.gameObject.transform.parent.gameObject.SetActive(false);
-                }
+                }*/
             }
             if (collision.gameObject.CompareTag("Canon"))
             {
@@ -56,11 +56,11 @@ public class ItemCollector : MonoBehaviour
                     
                     //récupère le parent parent (bullet = children, children)
                     if(collision.gameObject.name == "Bullet"){
-                        collision.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false); 
+                        Destroy(collision.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject); 
             
-                    }else{
+                    }/*else{
                         collision.gameObject.transform.parent.gameObject.SetActive(false);
-                    }
+                    }*/
                     
                 }
             }
