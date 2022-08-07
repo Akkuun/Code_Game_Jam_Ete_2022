@@ -26,7 +26,14 @@ public class enemiesRegrettingAnimation : MonoBehaviour
         if (currentTimer <= 0 && m_animator.GetBool("isRegretting"))
         {
             m_animator.SetBool("isRegretting", false);
-            Destroy(gameObject.transform.parent.gameObject);
+
+            if (transform.gameObject.layer == 6)
+            {
+                if (gameObject.CompareTag("Pic") || gameObject.CompareTag("Canon"))
+                {
+                    Destroy(gameObject.transform.parent.gameObject);
+                }
+            }
 
         }
         else if (currentTimer > 0 && m_animator.GetBool("isRegretting"))

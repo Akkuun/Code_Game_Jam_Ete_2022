@@ -110,19 +110,22 @@ public class PlayerMovements : MonoBehaviour
         {
             transform.position = respawnPoint;
             m_animator.SetBool("isDying", false);
+            m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
         else if (currentTimer <= 0 && m_animator.GetBool("isDying") && isMovingSpawnPointTrigger)
         {
             transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
             m_animator.SetBool("isDying", false);
+            m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
 
         else if (currentTimer > 0 && m_animator.GetBool("isDying"))
         {
             currentTimer -= Time.deltaTime;
         }
-    }
 
+    }
+    
     private void HorizontalMovements()
     {
         float horitonalInput = Input.GetAxisRaw("Horizontal");
@@ -174,8 +177,6 @@ public class PlayerMovements : MonoBehaviour
             m_isFalling = true;
             m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, Vector2.up.y * m_jumpForce);
                
-
-            
         }
         //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
@@ -349,17 +350,14 @@ public class PlayerMovements : MonoBehaviour
         if (collision.gameObject.layer == 6)
         {
             m_animator.SetBool("isDying", true);
-            Debug.Log("I'm dead");
 
             if (m_animator.GetBool("isDying"))
             {
                 currentTimer = timerDuration;
+                m_rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+
             }
 
-            if (!collision.gameObject.CompareTag("Canon") || !collision.gameObject.CompareTag("Pic"))
-            {
-                collision.gameObject.SetActive(false);
-            }
         }
 
         if(collision.gameObject.tag == "Plateform") transform.parent=collision.transform;
@@ -369,9 +367,28 @@ public class PlayerMovements : MonoBehaviour
     //Trigger detection, if the character trigger a checkpoint, his respawn point will be the point of trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Debug.Log(collision.tag);
+        
         if (collision.tag == "Checkpoint")
         {
             respawnPoint = transform.position;
+            GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+            Debug.Log("enter");
+            foreach(GameObject checkpoint in checkpoints)
+            {
+                if(respawnPoint != collision.gameObject.transform.position)
+                {
+                    Debug.Log("not");
+                    collision.gameObject.GetComponent<Animator>().SetBool("isActivated", false);
+                }
+                else
+                {
+                    Debug.Log("is");
+                    collision.gameObject.GetComponent<Animator>().SetBool("isActivated", true);
+                }
+            }
+            isMovingSpawnPointTrigger = false;
+
         }
         else if (collision.tag == "MovingCheckpoint")
         {
