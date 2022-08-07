@@ -15,8 +15,9 @@ public class PlayerMovements : MonoBehaviour
     private bool m_facingRight;
     private bool m_isDoubleJumping;
     private bool m_isFalling;
-    private bool soundPlayedOnce =false;
-    private bool soundPlayedTwice =false;
+    private bool soundPlayedOnce = false;
+    private bool canReplay = false;
+    private bool soundPlayedTwice = false;
     private bool m_canMoveToLeft;
     private bool m_canMoveToRight;
 
@@ -35,11 +36,15 @@ public class PlayerMovements : MonoBehaviour
     private RaycastHit2D hit2D;
 
     private Vector3 respawnPoint;
+    private Transform spawnPoint;
+    private bool isMovingSpawnPointTrigger;
+
+    private float timerDuration = 1f;
+    private float currentTimer;
 
     private ItemCollector m_itemCollector;
 
-
-    public AudioSource jumpSound;
+    //public AudioClip jumpSound;
 
     //-------------------------------------
 
@@ -48,8 +53,6 @@ public class PlayerMovements : MonoBehaviour
     public Animator m_animator;
 
     public Transform m_feet;
-    public Transform m_right;
-    public Transform m_left;
 
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
@@ -65,37 +68,58 @@ public class PlayerMovements : MonoBehaviour
         m_isDashing = false;
         m_facingRight = true;
         m_animator.SetFloat("initDashCount", m_initDashTime);
-        
 
         respawnPoint = transform.position;
+        spawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
+
+        currentTimer = timerDuration;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
-        if(m_isGrounded)
+        if (!m_animator.GetBool("isDying"))
         {
-            m_animator.SetBool("isJumping", false);
-        }
-        else if (!m_animator.GetBool("isDashing"))
-        {
-            m_animator.SetBool("isJumping", true);
-        }
-        if (m_playerHasDashing || m_itemCollector.CanUseItem("canon") || m_isDashing)
-        {
-           
-            if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
+            if (m_isGrounded)
+            {
+                m_animator.SetBool("isJumping", false);
+            }
+            else if (!m_animator.GetBool("isDashing"))
+            {
+                m_animator.SetBool("isJumping", true);
+            }
+            if (m_playerHasDashing || m_itemCollector.CanUseItem("canon") || m_isDashing)
+            {
+
+                if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
+                {
+                    HorizontalMovements();
+                    Jump();
+                }
+                Dash();
+            }
+            else
             {
                 HorizontalMovements();
                 Jump();
             }
-            Dash();
         }
-        else
+
+        if (currentTimer <= 0 && m_animator.GetBool("isDying") && !isMovingSpawnPointTrigger)
         {
-            HorizontalMovements();
-            Jump();
+            transform.position = respawnPoint;
+            m_animator.SetBool("isDying", false);
+        }
+        else if (currentTimer <= 0 && m_animator.GetBool("isDying") && isMovingSpawnPointTrigger)
+        {
+            transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
+            m_animator.SetBool("isDying", false);
+        }
+
+        else if (currentTimer > 0 && m_animator.GetBool("isDying"))
+        {
+            currentTimer -= Time.deltaTime;
         }
     }
 
@@ -165,6 +189,7 @@ public class PlayerMovements : MonoBehaviour
                 {
                     m_itemCollector.UseItem("pic");
                 }
+                canReplay = true;
                 m_animator.SetBool("isJumping", true);
                 m_animator.SetBool("isFalling", false);
                 m_isFalling=false;
@@ -179,7 +204,18 @@ public class PlayerMovements : MonoBehaviour
                 m_animator.SetBool("isFalling", false);
                 m_isFalling=false;
                 m_isDoubleJumping = !m_isDoubleJumping;
-               
+
+                if (!soundPlayedOnce)
+                {
+                    soundPlayedOnce = !soundPlayedOnce;
+                    //jumpSound.PlayOneShot();
+                }
+                else if(!soundPlayedOnce && canReplay && !soundPlayedTwice)
+                {
+                    soundPlayedTwice = !soundPlayedTwice;
+                    //jumpSound.Play();
+                }
+
             }
 
             //m_rigidBody.velocity = Vector2.up * m_jumpForce;
@@ -190,7 +226,6 @@ public class PlayerMovements : MonoBehaviour
         if((!m_isGrounded && m_currentJumpTime < 0) ||(!m_isGrounded && jumpInput == 0))
         {
             m_animator.SetBool("isFalling", true);
-            m_isDoubleJumping=true;
             m_isFalling=true;
             m_isDoubleJumping=true;
             
@@ -223,6 +258,10 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isDoubleJumping", false);
             m_isFalling=false;
             m_isDoubleJumping=false;
+
+            soundPlayedOnce = false;
+            canReplay = false;
+            soundPlayedTwice = false;
         }
 
         if (jumpInput == 1 && m_isGrounded && m_isDoubleJumping)
@@ -231,7 +270,9 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isJumping", true);
             m_animator.SetBool("isDoubleJumping", false);
             m_isDoubleJumping = false;
-        
+            soundPlayedOnce = false;
+            canReplay = false;
+            soundPlayedTwice = false;
         }
 
     }
@@ -298,9 +339,7 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isDashing", false);
             m_animator.SetFloat("initDashCount", m_initDashTime);
             m_animator.SetBool("isFalling", false);
-            m_isFalling=false;
-            soundPlayedOnce = true;
-            soundPlayedTwice = true;
+            m_isFalling = false;
         }
     }
 
@@ -309,11 +348,18 @@ public class PlayerMovements : MonoBehaviour
     {
         if (collision.gameObject.layer == 6)
         {
-            if(!collision.gameObject.CompareTag("Canon") || !collision.gameObject.CompareTag("Pic"))
+            m_animator.SetBool("isDying", true);
+            Debug.Log("I'm dead");
+
+            if (m_animator.GetBool("isDying"))
+            {
+                currentTimer = timerDuration;
+            }
+
+            if (!collision.gameObject.CompareTag("Canon") || !collision.gameObject.CompareTag("Pic"))
             {
                 collision.gameObject.SetActive(false);
             }
-            transform.position = respawnPoint;
         }
 
         if(collision.gameObject.tag == "Plateform") transform.parent=collision.transform;
@@ -326,6 +372,10 @@ public class PlayerMovements : MonoBehaviour
         if (collision.tag == "Checkpoint")
         {
             respawnPoint = transform.position;
+        }
+        else if (collision.tag == "MovingCheckpoint")
+        {
+            isMovingSpawnPointTrigger = true;
         }
     }
 

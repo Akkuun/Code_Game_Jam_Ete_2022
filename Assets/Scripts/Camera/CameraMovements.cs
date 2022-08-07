@@ -17,8 +17,7 @@ public class CameraMovements : MonoBehaviour
     {
         Vector3 nextPosition = transform.position;
 
-        nextPosition.x = (float)((int)((player.position.x+18)/36)*36);
-        Debug.Log(nextPosition.x + "   " + player.position.x);
+        nextPosition.x = (float)((int)((player.position.x+15)/30)*30);
         transform.position = nextPosition;
     }
 }
