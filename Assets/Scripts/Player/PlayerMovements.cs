@@ -46,6 +46,8 @@ public class PlayerMovements : MonoBehaviour
     private ItemCollector m_itemCollector;
 
     [SerializeField] private AudioSource jumpSound;
+    [SerializeField] private AudioSource dashSound;
+    [SerializeField] private AudioSource footStep;
 
     //-------------------------------------
 
@@ -58,7 +60,7 @@ public class PlayerMovements : MonoBehaviour
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
 
-    private HealthBar healthBar;
+    public HealthBar healthBar;
 
 
     // Start is called before the first frame update
@@ -76,8 +78,6 @@ public class PlayerMovements : MonoBehaviour
         spawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
 
         currentTimer = timerDuration;
-
-        healthBar = GameObject.FindGameObjectWithTag("Health").GetComponent<HealthBar>();
     }
 
     // Update is called once per frame
@@ -132,6 +132,7 @@ public class PlayerMovements : MonoBehaviour
             currentTimer -= Time.deltaTime;
         }
 
+        if (healthBar != null) {
         if (healthBar.getIsDead())
         {
             m_animator.SetBool("isDying", true);
@@ -143,6 +144,7 @@ public class PlayerMovements : MonoBehaviour
             }
 
             Invoke("healthBarRespawn", 5);
+        }
         }
 
     }
@@ -175,10 +177,12 @@ public class PlayerMovements : MonoBehaviour
 
     private void HorizontalMovements()
     {
+        
         float horitonalInput = Input.GetAxisRaw("Horizontal");
         if(horitonalInput > 0 || horitonalInput < 0 && !m_animator.GetBool("isJumping"))
         {
             m_animator.SetFloat("Speed", 1);
+            footStep.Play();
         }
         else
         {
@@ -228,7 +232,7 @@ public class PlayerMovements : MonoBehaviour
         //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
-            jumpSound.Play();
+            
         
             //Si il a la capacité de double jump et qu'il ne peut plus sauter
             if((m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) && !m_canDoubleJump)
@@ -339,6 +343,7 @@ public class PlayerMovements : MonoBehaviour
                     m_itemCollector.UseItem("canon");
                 }
                 m_isDashing = true;
+                dashSound.Play();
 
                 m_animator.SetBool("isJumping", false);
                 m_animator.SetBool("isFalling", false);
