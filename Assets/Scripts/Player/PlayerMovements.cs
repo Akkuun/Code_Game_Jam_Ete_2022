@@ -388,6 +388,7 @@ public class PlayerMovements : MonoBehaviour
                 }
             }
             isMovingSpawnPointTrigger = false;
+
         }
         else if (collision.tag == "MovingCheckpoint")
         {
