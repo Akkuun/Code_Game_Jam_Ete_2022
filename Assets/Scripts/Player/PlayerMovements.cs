@@ -45,7 +45,7 @@ public class PlayerMovements : MonoBehaviour
 
     private ItemCollector m_itemCollector;
 
-    //public AudioClip jumpSound;
+    [SerializeField] private AudioSource jumpSound;
 
     //-------------------------------------
 
@@ -59,6 +59,11 @@ public class PlayerMovements : MonoBehaviour
     public bool m_playerHasDashing;
 
     public HealthBar healthBar;
+
+    /*private GameObject pikeArrow;
+    private GameObject canonArrow;
+
+    [SerializeField] private GameObject arrowPikeItem;*/
 
 
     // Start is called before the first frame update
@@ -91,6 +96,7 @@ public class PlayerMovements : MonoBehaviour
             else if (!m_animator.GetBool("isDashing"))
             {
                 m_animator.SetBool("isJumping", true);
+                
             }
             if (m_playerHasDashing || m_itemCollector.CanUseItem("canon") || m_isDashing)
             {
@@ -121,7 +127,10 @@ public class PlayerMovements : MonoBehaviour
             transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
             m_animator.SetBool("isDying", false);
             m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
-  
+            /*pikeArrow = Instantiate(arrowPikeItem) as GameObject;
+            pikeArrow.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+            Invoke("pikeArrowSpawn", 1);*/
+
         }
 
         else if (currentTimer > 0 && m_animator.GetBool("isDying"))
@@ -129,6 +138,7 @@ public class PlayerMovements : MonoBehaviour
             currentTimer -= Time.deltaTime;
         }
 
+        if (healthBar != null) {
         if (healthBar.getIsDead())
         {
             m_animator.SetBool("isDying", true);
@@ -140,10 +150,16 @@ public class PlayerMovements : MonoBehaviour
             }
 
             Invoke("healthBarRespawn", 1);
-
+        }
         }
 
     }
+
+    /*void pikeArrowSpawn()
+    {
+        Debug.Log("Pouet");
+        Destroy(pikeArrow.gameObject);
+    }*/
 
     void healthBarRespawn()
     {
@@ -221,12 +237,12 @@ public class PlayerMovements : MonoBehaviour
 
             m_isFalling = true;
             m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, Vector2.up.y * m_jumpForce);
-               
+            jumpSound.Play();
         }
         //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
-                
+            jumpSound.Play();
         
             //Si il a la capacité de double jump et qu'il ne peut plus sauter
             if((m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) && !m_canDoubleJump)
@@ -254,12 +270,13 @@ public class PlayerMovements : MonoBehaviour
                 if (!soundPlayedOnce)
                 {
                     soundPlayedOnce = !soundPlayedOnce;
-                    //jumpSound.PlayOneShot();
+                    jumpSound.Play();
                 }
                 else if(!soundPlayedOnce && canReplay && !soundPlayedTwice)
                 {
                     soundPlayedTwice = !soundPlayedTwice;
-                    //jumpSound.Play();
+                    jumpSound.Play();
+                    jumpSound.Play();
                 }
 
             }
@@ -288,6 +305,8 @@ public class PlayerMovements : MonoBehaviour
                 m_canDoubleJump = false;
                 m_isJumping = true;
                 m_currentJumpTime = m_maxJumpTime;
+                jumpSound.Play();
+                jumpSound.Play();
             }
             //Sinon si il a pas la capacité pour double jump
             else if(!(m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) || (!m_canDoubleJump && (m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) && m_currentJumpTime != m_maxJumpTime))
