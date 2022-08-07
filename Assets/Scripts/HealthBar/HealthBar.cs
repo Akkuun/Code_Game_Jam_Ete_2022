@@ -17,8 +17,10 @@ public class HealthBar : MonoBehaviour
    
 
     public void degat(){
-        if(currentLifePoint < 20){
+        if(currentLifePoint <= 20){
             isDead = true; 
+            currentLifePoint = 0; 
+            slider.value = 0;
         }else{
             currentLifePoint = currentLifePoint - 20; 
             slider.value = currentLifePoint;
