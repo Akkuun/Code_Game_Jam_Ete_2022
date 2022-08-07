@@ -125,6 +125,9 @@ public class ItemCollector : MonoBehaviour
             m_picHasBeenUsed = true;
             pic -= 1;
             healthBar.degat();
+            if(healthBar.getIsDead()){
+                healthBar.resetLife();
+            }
         }
         else if (_item.Equals("canon"))
         {
@@ -133,6 +136,9 @@ public class ItemCollector : MonoBehaviour
             m_canonHasBeenUsed = true;
             canon -= 1;
             healthBar.degat();
+            if(healthBar.getIsDead()){
+                healthBar.resetLife();
+            }
         }
     }
 
