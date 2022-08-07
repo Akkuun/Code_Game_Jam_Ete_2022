@@ -41,6 +41,7 @@ public class PlayerMovements : MonoBehaviour
 
     private float timerDuration = 1f;
     private float currentTimer;
+    private float currentTimerHealthBar;
 
     private ItemCollector m_itemCollector;
 
@@ -111,21 +112,6 @@ public class PlayerMovements : MonoBehaviour
             }
         }
 
-        if (healthBar.getIsDead())
-        {
-            m_animator.SetBool("isDying", true);
-
-            if (m_animator.GetBool("isDying"))
-            {
-                currentTimer = timerDuration;
-                m_rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
-                Debug.Log("pouet1");
-            }
-
-            Invoke("healthBarRespawn", 1);
-
-        }
-
         if (currentTimer <= 0 && m_animator.GetBool("isDying") && !isMovingSpawnPointTrigger)
         {
             transform.position = respawnPoint;
@@ -146,6 +132,20 @@ public class PlayerMovements : MonoBehaviour
             currentTimer -= Time.deltaTime;
         }
 
+        if (healthBar.getIsDead())
+        {
+            m_animator.SetBool("isDying", true);
+
+            if (m_animator.GetBool("isDying"))
+            {
+                currentTimerHealthBar = timerDuration;
+                m_rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+
+            Invoke("healthBarRespawn", 1);
+
+        }
+
     }
 
     void healthBarRespawn()
@@ -153,23 +153,23 @@ public class PlayerMovements : MonoBehaviour
 
         while (m_animator.GetBool("isDying"))
         {
-            if (currentTimer <= 0 && !isMovingSpawnPointTrigger)
+            if (currentTimerHealthBar <= 0 && !isMovingSpawnPointTrigger)
             {
                 transform.position = respawnPoint;
                 m_animator.SetBool("isDying", false);
                 m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
                 healthBar.resetLife();
             }
-            else if (currentTimer <= 0 && isMovingSpawnPointTrigger)
+            else if (currentTimerHealthBar <= 0 && isMovingSpawnPointTrigger)
             {
                 transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
                 m_animator.SetBool("isDying", false);
                 m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
                 healthBar.resetLife();
             }
-            else if (currentTimer > 0)
+            else if (currentTimerHealthBar > 0)
             {
-                currentTimer -= Time.deltaTime;
+                currentTimerHealthBar -= Time.deltaTime;
             }
         }
     }
