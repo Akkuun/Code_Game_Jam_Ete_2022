@@ -6,25 +6,28 @@ using UnityEngine.Playables;
 public class FinishScript : MonoBehaviour
 {
 
-    [SerializeField] 
-    private GameObject _cutscene;
+  
 
     
-   
+   public PlayableDirector timeline;
+    public PlayableAsset cutscene;
 
 
     void OnTriggerEnter2D(Collider2D other)
     {
    
-      if(other.CompareTag("Player"))
-      {
-       Debug.Log("aaaaa");      
-      _cutscene.SetActive(true);
-      }
+          StartCoroutine(StartCutscene());
 
     }
 
-    
+    IEnumerator StartCutscene()
+    {
+        yield return new WaitForSeconds(.2f);
+ 
+      
+        timeline.playableAsset = cutscene;
+        timeline.Play();
+    }
 
 
 
