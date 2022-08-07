@@ -242,7 +242,7 @@ public class PlayerMovements : MonoBehaviour
         //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
-            jumpSound.Play();
+            //jumpSound.Play();
         
             //Si il a la capacité de double jump et qu'il ne peut plus sauter
             if((m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) && !m_canDoubleJump)
