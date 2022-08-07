@@ -9,8 +9,6 @@ public class enemiesRegrettingAnimation : MonoBehaviour
     private float timerDuration = 1f;
     private float currentTimer;
 
-    //public GameObject gameObjectToDestroy;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +26,7 @@ public class enemiesRegrettingAnimation : MonoBehaviour
         if (currentTimer <= 0 && m_animator.GetBool("isRegretting"))
         {
             m_animator.SetBool("isRegretting", false);
-            //Destroy(gameObjectToDestroy.transform.parent.gameObject);
             Destroy(gameObject.transform.parent.gameObject);
-            Debug.Log(gameObject.transform.parent.name);
 
         }
         else if (currentTimer > 0 && m_animator.GetBool("isRegretting"))
