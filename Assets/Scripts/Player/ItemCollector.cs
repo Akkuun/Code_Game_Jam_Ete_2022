@@ -11,6 +11,9 @@ public class ItemCollector : MonoBehaviour
     [SerializeField] private GameObject canonItemPrefab;
     private HealthBar healthBar;
 
+    [SerializeField] private AudioSource deadSound; 
+    
+
 
 
     private bool m_picHasBeenUsed;
@@ -28,9 +31,13 @@ public class ItemCollector : MonoBehaviour
 
             if (pic + canon < 5)
         {
+
+            
             if (collision.gameObject.CompareTag("Pic"))
             { //récupère le type d'obstacle
                 pic += 1;
+                deadSound.Play();
+                
                 healthBar.resetLife();
                
                 GameObject picObject = Instantiate(picItemPrefab) as GameObject;
@@ -44,6 +51,7 @@ public class ItemCollector : MonoBehaviour
             if (collision.gameObject.CompareTag("Canon"))
             {
                 canon += 1;
+                deadSound.Play();
                 healthBar.resetLife();
               
 
@@ -81,6 +89,7 @@ public class ItemCollector : MonoBehaviour
             pic -= 1;
             healthBar.degat();
             if(healthBar.getIsDead()){
+                deadSound.Play();
                 //healthBar.resetLife();
             }
         }
@@ -92,6 +101,7 @@ public class ItemCollector : MonoBehaviour
             canon -= 1;
             healthBar.degat();
             if(healthBar.getIsDead()){
+                deadSound.Play();
                 //healthBar.resetLife();
             }
         }
