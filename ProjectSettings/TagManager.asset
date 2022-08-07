@@ -14,6 +14,7 @@ TagManager:
   - Health
   - UwuScreen
   - Plateform
+  - ObstacleRespawn
   layers:
   - Default
   - TransparentFX
