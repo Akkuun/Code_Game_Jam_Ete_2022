@@ -46,6 +46,7 @@ public class PlayerMovements : MonoBehaviour
     private ItemCollector m_itemCollector;
 
     [SerializeField] private AudioSource jumpSound;
+    [SerializeField] private AudioSource dashSound;
 
     //-------------------------------------
 
@@ -340,6 +341,7 @@ public class PlayerMovements : MonoBehaviour
                     m_itemCollector.UseItem("canon");
                 }
                 m_isDashing = true;
+                dashSound.Play();
 
                 m_animator.SetBool("isJumping", false);
                 m_animator.SetBool("isFalling", false);
