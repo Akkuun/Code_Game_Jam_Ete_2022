@@ -10,12 +10,15 @@ public class enemiesRegrettingAnimation : MonoBehaviour
     private float currentTimer;
     
     public GameObject player;
-    
+    private GameObject arrow;
+
+    [SerializeField] private GameObject item;
 
     // Start is called before the first frame update
     void Start()
     {
         currentTimer = timerDuration;
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -32,16 +35,18 @@ public class enemiesRegrettingAnimation : MonoBehaviour
 
             if (transform.gameObject.layer == 6)
             {
-                if (gameObject.CompareTag("Pic"))
+                if (gameObject.CompareTag("Pic") || gameObject.CompareTag("Canon"))
                 {
                     Destroy(gameObject.transform.parent.gameObject);
-                }
-                else if (gameObject.CompareTag("Canon"))
-                {
-                    Destroy(gameObject.transform.parent.gameObject);
+
+                    arrow = Instantiate(item) as GameObject;
+                    arrow.transform.SetParent(player.transform);
+                    arrow.transform.position = new Vector3(player.transform.position.x + 0.4f, player.transform.position.y - 0.5f, player.transform.position.z);
+
+                    Destroy(arrow.gameObject, 2);
+
                 }
             }
-
         }
         else if (currentTimer > 0 && m_animator.GetBool("isRegretting"))
         {
@@ -50,8 +55,7 @@ public class enemiesRegrettingAnimation : MonoBehaviour
 
     }
 
-
-        private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         m_animator.SetBool("isRegretting", true);
 
@@ -61,4 +65,5 @@ public class enemiesRegrettingAnimation : MonoBehaviour
         }
 
     }
+
 }
