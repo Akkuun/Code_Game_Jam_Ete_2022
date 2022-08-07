@@ -31,6 +31,7 @@ public class CameraMovements : MonoBehaviour
         {
             if(m_hasReset)
             {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<ItemCollector>().ResetItem();
                 m_hasReset = false;
 
             }

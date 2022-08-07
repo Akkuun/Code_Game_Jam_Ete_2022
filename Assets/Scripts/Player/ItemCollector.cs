@@ -136,4 +136,26 @@ public class ItemCollector : MonoBehaviour
             m_canonHasBeenUsed = false;
         }
     }
+
+    public void ResetItem()
+    {
+        pic = 0;
+        canon = 0;
+
+        GameObject[] smallPics = GameObject.FindGameObjectsWithTag("PicItem");
+        //Destroy((GameObject)smallPics.GetValue(0));
+
+        foreach(GameObject smallPic in smallPics)
+        {
+            Destroy(smallPic);
+        }
+
+        GameObject[] smallCanons = GameObject.FindGameObjectsWithTag("CanonItem");
+        //Destroy(smallCanons[0]);
+
+        foreach (GameObject smallCanon in smallCanons)
+        {
+            Destroy(smallCanon);
+        }
+    }
 }
