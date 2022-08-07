@@ -372,7 +372,23 @@ public class PlayerMovements : MonoBehaviour
         if (collision.tag == "Checkpoint")
         {
             respawnPoint = transform.position;
+            GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+            Debug.Log("enter");
+            foreach(GameObject checkpoint in checkpoints)
+            {
+                if(respawnPoint != collision.gameObject.transform.position)
+                {
+                    Debug.Log("not");
+                    collision.gameObject.GetComponent<Animator>().SetBool("isActivated", false);
+                }
+                else
+                {
+                    Debug.Log("is");
+                    collision.gameObject.GetComponent<Animator>().SetBool("isActivated", true);
+                }
+            }
             isMovingSpawnPointTrigger = false;
+
         }
         else if (collision.tag == "MovingCheckpoint")
         {
