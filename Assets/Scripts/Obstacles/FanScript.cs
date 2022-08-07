@@ -5,49 +5,37 @@ using UnityEngine;
 public class FanScript : MonoBehaviour
 {
 
-    public bool isAttractiveMode,isNonAttractiveMode;
-    public bool is_trigger = false;
-    private int direction = 1;
-    public Rigidbody2D m_Rigidbody;
-    public int coef;
-    private Vector3 movement;
+    public bool toTheRight,toTheLeft;
+    public bool down,up;
 
-     void Start()
+
+    private int direction = 1;
+    public int coef;
+
+    public Rigidbody2D m_Rigidbody;
+
+    private Vector3 movement;
+    
+    
+
+    void FixedUpdate()
     {
-        Debug.Log(m_Rigidbody);
-        // AddForce is a function of RigidBody2D
-       //m_Rigidbody.AddForce(new Vector2(coef, 0), ForceMode2D.Impulse);
-       
+        if(toTheLeft) GetComponent<Animator>().SetBool("Expulsion", false);
+        if(toTheRight) GetComponent<Animator>().SetBool("Expulsion", true);
+        if(down) GetComponent<Animator>().SetBool("Expulsion", true);
+        if(up) GetComponent<Animator>().SetBool("Expulsion", false);
     }
    
     
 
     void OnTriggerStay2D(Collider2D collision) {
-     m_Rigidbody=   collision.gameObject.GetComponent<Rigidbody2D>();
-    
-    
-    if(isNonAttractiveMode) m_Rigidbody.AddForce(-Vector2.right * coef);
-    if(isAttractiveMode) m_Rigidbody.AddForce(Vector2.right * coef);
-       //m_Rigidbody.AddForce(new Vector3(coef, 0.0f, 0.0f));
+        m_Rigidbody=   collision.gameObject.GetComponent<Rigidbody2D>();
+
+        if(toTheLeft) m_Rigidbody.AddForce(Vector2.left * coef);
+        if(toTheRight) m_Rigidbody.AddForce(Vector2.right * coef);
+        if(down) m_Rigidbody.AddForce(Vector2.down * coef);
+        if(up) m_Rigidbody.AddForce(Vector2.up * coef);
       
-    }
-    /*
-    void OnTriggerEnter2D(Collider2D other) {
-    if(other.gameObject.tag == "Player"){
-        Debug.Log("JumpForce Added");
-
-        m_Rigidbody =  GetComponent();
-       m_Rigidbody.AddForce(new Vector2(0.0f, coef));
-    //   m_Rigidbody.AddForce(new Vector2(coef, 0), ForceMode2D.Impulse);
-     //  m_Rigidbody.AddForce(Vector2.down * coef);
-    }
-}
-*/
-    void OnTriggerExit2D(Collider2D collision)
-    {
-   
-
-     
     }
 
 
