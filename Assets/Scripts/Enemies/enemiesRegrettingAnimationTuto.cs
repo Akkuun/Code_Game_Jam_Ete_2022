@@ -34,6 +34,7 @@ public class enemiesRegrettingAnimationTuto : MonoBehaviour
                 {
                     Destroy(gameObject.transform.parent.gameObject);
                     GameObject picObject = Instantiate(screenUwu) as GameObject;
+
                 }
                 
             }
