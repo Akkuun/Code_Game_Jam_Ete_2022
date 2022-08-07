@@ -15,8 +15,9 @@ public class PlayerMovements : MonoBehaviour
     private bool m_facingRight;
     private bool m_isDoubleJumping;
     private bool m_isFalling;
-    private bool soundPlayedOnce =false;
-    private bool soundPlayedTwice =false;
+    private bool soundPlayedOnce = false;
+    private bool canReplay = false;
+    private bool soundPlayedTwice = false;
     private bool m_canMoveToLeft;
     private bool m_canMoveToRight;
 
@@ -43,8 +44,7 @@ public class PlayerMovements : MonoBehaviour
 
     private ItemCollector m_itemCollector;
 
-
-    public AudioSource jumpSound;
+    //public AudioClip jumpSound;
 
     //-------------------------------------
 
@@ -53,8 +53,6 @@ public class PlayerMovements : MonoBehaviour
     public Animator m_animator;
 
     public Transform m_feet;
-    public Transform m_right;
-    public Transform m_left;
 
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
@@ -191,6 +189,7 @@ public class PlayerMovements : MonoBehaviour
                 {
                     m_itemCollector.UseItem("pic");
                 }
+                canReplay = true;
                 m_animator.SetBool("isJumping", true);
                 m_animator.SetBool("isFalling", false);
                 m_isFalling=false;
@@ -205,7 +204,18 @@ public class PlayerMovements : MonoBehaviour
                 m_animator.SetBool("isFalling", false);
                 m_isFalling=false;
                 m_isDoubleJumping = !m_isDoubleJumping;
-               
+
+                if (!soundPlayedOnce)
+                {
+                    soundPlayedOnce = !soundPlayedOnce;
+                    //jumpSound.PlayOneShot();
+                }
+                else if(!soundPlayedOnce && canReplay && !soundPlayedTwice)
+                {
+                    soundPlayedTwice = !soundPlayedTwice;
+                    //jumpSound.Play();
+                }
+
             }
 
             //m_rigidBody.velocity = Vector2.up * m_jumpForce;
@@ -216,7 +226,6 @@ public class PlayerMovements : MonoBehaviour
         if((!m_isGrounded && m_currentJumpTime < 0) ||(!m_isGrounded && jumpInput == 0))
         {
             m_animator.SetBool("isFalling", true);
-            m_isDoubleJumping=true;
             m_isFalling=true;
             m_isDoubleJumping=true;
             
@@ -249,6 +258,10 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isDoubleJumping", false);
             m_isFalling=false;
             m_isDoubleJumping=false;
+
+            soundPlayedOnce = false;
+            canReplay = false;
+            soundPlayedTwice = false;
         }
 
         if (jumpInput == 1 && m_isGrounded && m_isDoubleJumping)
@@ -257,7 +270,9 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isJumping", true);
             m_animator.SetBool("isDoubleJumping", false);
             m_isDoubleJumping = false;
-        
+            soundPlayedOnce = false;
+            canReplay = false;
+            soundPlayedTwice = false;
         }
 
     }
@@ -324,9 +339,7 @@ public class PlayerMovements : MonoBehaviour
             m_animator.SetBool("isDashing", false);
             m_animator.SetFloat("initDashCount", m_initDashTime);
             m_animator.SetBool("isFalling", false);
-            m_isFalling=false;
-            soundPlayedOnce = true;
-            soundPlayedTwice = true;
+            m_isFalling = false;
         }
     }
 
