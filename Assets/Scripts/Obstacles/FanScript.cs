@@ -5,7 +5,7 @@ using UnityEngine;
 public class FanScript : MonoBehaviour
 {
 
-    private bool isAttractiveMode,isNonAttractiveMode;
+    public bool isAttractiveMode,isNonAttractiveMode;
     public bool is_trigger = false;
     private int direction = 1;
     public Rigidbody2D m_Rigidbody;
@@ -26,9 +26,8 @@ public class FanScript : MonoBehaviour
      m_Rigidbody=   collision.gameObject.GetComponent<Rigidbody2D>();
     
     
-    Debug.Log("AaA");
-    m_Rigidbody.AddForce(Vector2.right * coef);
-
+    if(isNonAttractiveMode) m_Rigidbody.AddForce(-Vector2.right * coef);
+    if(isAttractiveMode) m_Rigidbody.AddForce(Vector2.right * coef);
        //m_Rigidbody.AddForce(new Vector3(coef, 0.0f, 0.0f));
       
     }
