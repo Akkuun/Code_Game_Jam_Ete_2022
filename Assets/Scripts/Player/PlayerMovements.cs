@@ -47,6 +47,7 @@ public class PlayerMovements : MonoBehaviour
 
     [SerializeField] private AudioSource jumpSound;
     [SerializeField] private AudioSource dashSound;
+    [SerializeField] private AudioSource footStep;
 
     //-------------------------------------
 
@@ -177,10 +178,12 @@ public class PlayerMovements : MonoBehaviour
 
     private void HorizontalMovements()
     {
+        
         float horitonalInput = Input.GetAxisRaw("Horizontal");
         if(horitonalInput > 0 || horitonalInput < 0 && !m_animator.GetBool("isJumping"))
         {
             m_animator.SetFloat("Speed", 1);
+            footStep.Play();
         }
         else
         {
