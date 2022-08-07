@@ -19,6 +19,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canon Tuto
       objectReference: {fileID: 0}
+    - target: {fileID: 1806447566003463122, guid: bca6510b5e2de04479159610d0b54226, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4176202616679302819, guid: bca6510b5e2de04479159610d0b54226, type: 3}
       propertyPath: m_Name
       value: Canon Facing Left Tuto Variant
@@ -84,7 +88,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 4059544602223232060, guid: bca6510b5e2de04479159610d0b54226, type: 3}
+    - {fileID: 388043749819974221, guid: bca6510b5e2de04479159610d0b54226, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bca6510b5e2de04479159610d0b54226, type: 3}
 --- !u!1 &765915736715645652 stripped
 GameObject:
