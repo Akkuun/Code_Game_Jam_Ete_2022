@@ -120,7 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 148684457532148992, guid: 8635d426776bb774d9249cf5488c17ce, type: 3}
-  item: {fileID: 777642571241505959, guid: e5ba2c0a229f1d04fa9754d8c270b12a, type: 3}
+  item: {fileID: 3747429301991661612, guid: e4e207018a9a3154bbdfe43c75b14659, type: 3}
+  bubbleScreen: {fileID: 3439420232422281684, guid: f1a63cbca989b4b41a55f6e910bb3142, type: 3}
 --- !u!82 &1861096945986331731
 AudioSource:
   m_ObjectHideFlags: 0
