@@ -60,7 +60,7 @@ public class PlayerMovements : MonoBehaviour
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
 
-    private HealthBar healthBar;
+    public HealthBar healthBar;
 
     /*private GameObject pikeArrow;
     private GameObject canonArrow;
@@ -83,8 +83,6 @@ public class PlayerMovements : MonoBehaviour
         spawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
 
         currentTimer = timerDuration;
-
-        healthBar = GameObject.FindGameObjectWithTag("Health").GetComponent<HealthBar>();
     }
 
     // Update is called once per frame
@@ -142,6 +140,7 @@ public class PlayerMovements : MonoBehaviour
             currentTimer -= Time.deltaTime;
         }
 
+        if (healthBar != null) {
         if (healthBar.getIsDead())
         {
             m_animator.SetBool("isDying", true);
@@ -153,6 +152,7 @@ public class PlayerMovements : MonoBehaviour
             }
 
             Invoke("healthBarRespawn", 1);
+        }
         }
 
     }

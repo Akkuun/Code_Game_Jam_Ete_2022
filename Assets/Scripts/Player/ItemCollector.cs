@@ -29,7 +29,7 @@ public class ItemCollector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision){
 
-        if (pic + canon < 5)
+            if (pic + canon < 5)
         {
 
             
@@ -147,5 +147,29 @@ public class ItemCollector : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     
+=======
+    public void ResetItem()
+    {
+        pic = 0;
+        canon = 0;
+
+        GameObject[] smallPics = GameObject.FindGameObjectsWithTag("PicItem");
+        //Destroy((GameObject)smallPics.GetValue(0));
+
+        foreach(GameObject smallPic in smallPics)
+        {
+            Destroy(smallPic);
+        }
+
+        GameObject[] smallCanons = GameObject.FindGameObjectsWithTag("CanonItem");
+        //Destroy(smallCanons[0]);
+
+        foreach (GameObject smallCanon in smallCanons)
+        {
+            Destroy(smallCanon);
+        }
+    }
+>>>>>>> f3734f1eee14111603fb0df4d964cdc6b6e6bd12
 }
