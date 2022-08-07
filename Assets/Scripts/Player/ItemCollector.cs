@@ -56,7 +56,7 @@ public class ItemCollector : MonoBehaviour
                     
                     //récupère le parent parent (bullet = children, children)
                     if(collision.gameObject.name == "Bullet"){
-                        Destroy(collision.gameObject.transform.parent.gameObject.transform.parent.gameObject); 
+                        Destroy(collision.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject); 
             
                     }/*else{
                         collision.gameObject.transform.parent.gameObject.SetActive(false);
