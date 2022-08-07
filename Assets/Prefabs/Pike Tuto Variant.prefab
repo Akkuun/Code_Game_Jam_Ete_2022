@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2060538134156756887, guid: 8e5d908fe7bdc314e88d617cace1b3c4, type: 3}
       propertyPath: m_Name
-      value: Pike Tuto
+      value: Pike Tuto Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2060538134857746734, guid: 8e5d908fe7bdc314e88d617cace1b3c4, type: 3}
       propertyPath: m_Name
