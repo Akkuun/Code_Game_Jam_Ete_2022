@@ -27,7 +27,7 @@ public class BulletBehaviour : MonoBehaviour
         m_direction = 1f;
     }
 
-    public void OnCollisionEnter2D(Collider2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log(collision.gameObject.name);
         if(collision.gameObject.tag == "Ground")

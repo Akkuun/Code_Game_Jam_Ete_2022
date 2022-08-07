@@ -20,6 +20,15 @@ public class FlagAnimation : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+
+        foreach (GameObject checkpoint in checkpoints)
+        {
+            if(collision.gameObject.GetComponent<Animator>() != null)
+            {
+                collision.gameObject.GetComponent<Animator>().SetBool("Enabled", false);
+            }
+        }
         m_animator.SetBool("isActivated", true);
     }
 }

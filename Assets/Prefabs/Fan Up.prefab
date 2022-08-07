@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7019541327355012}
   - component: {fileID: 6576555822202733273}
   - component: {fileID: 5336239398649569099}
-  - component: {fileID: 2561707306635323683}
+  - component: {fileID: 9180085446257401088}
   m_Layer: 3
   m_Name: Fan Up
   m_TagString: Untagged
@@ -142,7 +142,7 @@ MonoBehaviour:
   - {x: 0.43769073, y: -0.8125, z: 0}
   m_ShapePathHash: -1413692907
   m_Mesh: {fileID: 0}
-  m_InstanceId: -3046814
+  m_InstanceId: 526468
 --- !u!61 &5336239398649569099
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -169,24 +169,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8745556, y: 0.40667903}
   m_EdgeRadius: 0
---- !u!114 &2561707306635323683
+--- !u!114 &9180085446257401088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3623630823459163466}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f4c37753cd1a3c46976dfbc5fd970c9, type: 3}
+  m_Script: {fileID: 11500000, guid: d05abfd77ea4404449bf516c2c86ce6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toTheRight: 0
   toTheLeft: 0
   down: 0
   up: 1
-  coef: 100
-  m_Rigidbody: {fileID: 0}
 --- !u!1 &6685771538981331016
 GameObject:
   m_ObjectHideFlags: 0
