@@ -6,27 +6,12 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedSceneGuid-0:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 6151d88878b15c42eb645fd7d0c82800b6df2fa8
-=======
->>>>>>> 73931ec55eb0dec487b107d181a6fabd04e78463
       value: 5001060254545f580b0a0d7714215d4446164c737b7d70317e2f4b67bbe36169
       flags: 0
     RecentlyUsedSceneGuid-1:
       value: 515250075c0c595e5f5a5e71122159444e4e4a2f7a7d7f602f284d66b4b76661
-
-      value: 0554055f5d065f0e0b0a087640275d44434f482b2d2971637a711f32b1e53239
-      flags: 0
-    RecentlyUsedSceneGuid-1:
-      value: 0554025507560c0a5b575971447508441415492c7f2b7e3475714e66e1b03668
       flags: 0
     RecentlyUsedSceneGuid-2:
->>>>>>> 42918ee546ab3df1518b3f2eefaed9b720fad5d0
       value: 5001060254545f580b0a0d7714215d4446164c737b7d70317e2f4b67bbe36169
       flags: 0
     RecentlyUsedSceneGuid-1:
@@ -56,8 +41,8 @@ EditorUserSettings:
   m_VCDebugCmd: 0
   m_VCDebugOut: 0
   m_SemanticMergeMode: 2
-  m_DesiredImportWorkerCount: 1
-  m_StandbyImportWorkerCount: 1
+  m_DesiredImportWorkerCount: 2
+  m_StandbyImportWorkerCount: 2
   m_IdleImportWorkerShutdownDelay: 60000
   m_VCShowFailedCheckout: 1
   m_VCOverwriteFailedCheckoutAssets: 1
