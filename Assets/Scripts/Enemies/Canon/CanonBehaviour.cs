@@ -15,6 +15,8 @@ public class CanonBehaviour : MonoBehaviour
 
     public float m_maxDelay = 5f;
 
+    [SerializeField] private AudioSource canonSound; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,7 @@ public class CanonBehaviour : MonoBehaviour
     private void SpawnBullet()
     {
         GameObject bullet = Instantiate(m_bulletPrefab, transform) as GameObject;
+        canonSound.Play();
         
         if(transform.localScale.x == -1)
         {

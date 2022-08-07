@@ -7,7 +7,7 @@ public class FlagAnimation : MonoBehaviour
 {
     public Animator m_animator;
     private GameObject[] goArray;
-   
+    [SerializeField] private AudioSource checkpointSound;
     void Start()
     {
             GameObject[] gameObjectArray = GameObject.FindGameObjectsWithTag("Checkpoint");
@@ -40,5 +40,17 @@ public class FlagAnimation : MonoBehaviour
                 }
             }
         }
+    
+        checkpointSound.Play();
+        GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+
+        foreach (GameObject checkpoint in checkpoints)
+        {
+            if(collision.gameObject.GetComponent<Animator>() != null)
+            {
+                collision.gameObject.GetComponent<Animator>().SetBool("Enabled", false);
+            }
+        }
+        m_animator.SetBool("isActivated", true);
     }
 }

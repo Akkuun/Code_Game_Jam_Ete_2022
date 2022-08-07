@@ -15,19 +15,7 @@ public class FanScript : MonoBehaviour
     public Rigidbody2D m_Rigidbody;
 
     private Vector3 movement;
-    
-    
-
-    void FixedUpdate()
-    {
-        if(toTheLeft) GetComponent<Animator>().SetBool("Expulsion", false);
-        if(toTheRight) GetComponent<Animator>().SetBool("Expulsion", true);
-        if(down) GetComponent<Animator>().SetBool("Expulsion", true);
-        if(up) GetComponent<Animator>().SetBool("Expulsion", false);
-    }
-   
-    
-
+  
     void OnTriggerStay2D(Collider2D collision) {
         m_Rigidbody=   collision.gameObject.GetComponent<Rigidbody2D>();
 
