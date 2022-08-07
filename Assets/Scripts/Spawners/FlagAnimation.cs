@@ -22,10 +22,8 @@ public class FlagAnimation : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-<<<<<<< HEAD
     
         checkpointSound.Play();
-=======
         GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
 
         foreach (GameObject checkpoint in checkpoints)
@@ -35,7 +33,6 @@ public class FlagAnimation : MonoBehaviour
                 collision.gameObject.GetComponent<Animator>().SetBool("Enabled", false);
             }
         }
->>>>>>> f3734f1eee14111603fb0df4d964cdc6b6e6bd12
         m_animator.SetBool("isActivated", true);
     }
 }

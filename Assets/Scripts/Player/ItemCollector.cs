@@ -147,9 +147,6 @@ public class ItemCollector : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-    
-=======
     public void ResetItem()
     {
         pic = 0;
@@ -171,5 +168,4 @@ public class ItemCollector : MonoBehaviour
             Destroy(smallCanon);
         }
     }
->>>>>>> f3734f1eee14111603fb0df4d964cdc6b6e6bd12
 }
