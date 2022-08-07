@@ -6,8 +6,10 @@ public class removeUwuScreen : MonoBehaviour
 {
     public GameObject player;
     private GameObject arrow;
+    private GameObject bubble;
 
     [SerializeField] private GameObject item;
+    [SerializeField] private GameObject bubbleScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,13 @@ public class removeUwuScreen : MonoBehaviour
             arrow.transform.position = new Vector3(player.transform.position.x + 0.4f, player.transform.position.y - 0.5f, player.transform.position.z);
 
             Destroy(arrow.gameObject, 2);
+
+            bubble = Instantiate(bubbleScreen) as GameObject;
+            bubble.transform.SetParent(player.transform);
+            bubble.transform.position = new Vector3(player.transform.position.x - 1.0f, player.transform.position.y - 0.5f, player.transform.position.z);
+
+            Destroy(bubble.gameObject, 2);
+
         }
     }
 
