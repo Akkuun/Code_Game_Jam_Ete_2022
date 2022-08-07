@@ -27,7 +27,7 @@ public class CameraMovements : MonoBehaviour
     {
         Vector3 nextPosition = transform.position;
         float cameraFuturPosition = (float)((int)((player.position.x + 15) / 30) * 30);
-        if (cameraFuturPosition != Mathf.Round(transform.position.x))
+        if (cameraFuturPosition != Mathf.Round(transform.position.x) &&  player.position.x < 360)
         {
             if(m_hasReset)
             {
