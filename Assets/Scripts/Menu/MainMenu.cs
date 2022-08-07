@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
     
 
 	public void PlayGame(){
-		SceneManager.LoadScene("Player"); 
+		SceneManager.LoadScene("MapCinematics"); 
 
 	}
 
