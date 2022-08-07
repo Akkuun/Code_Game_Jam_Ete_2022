@@ -60,6 +60,11 @@ public class PlayerMovements : MonoBehaviour
 
     private HealthBar healthBar;
 
+    /*private GameObject pikeArrow;
+    private GameObject canonArrow;
+
+    [SerializeField] private GameObject arrowPikeItem;*/
+
 
     // Start is called before the first frame update
     void Start()
@@ -124,7 +129,10 @@ public class PlayerMovements : MonoBehaviour
             transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
             m_animator.SetBool("isDying", false);
             m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
-  
+            /*pikeArrow = Instantiate(arrowPikeItem) as GameObject;
+            pikeArrow.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+            Invoke("pikeArrowSpawn", 1);*/
+
         }
 
         else if (currentTimer > 0 && m_animator.GetBool("isDying"))
@@ -143,10 +151,15 @@ public class PlayerMovements : MonoBehaviour
             }
 
             Invoke("healthBarRespawn", 1);
-
         }
 
     }
+
+    /*void pikeArrowSpawn()
+    {
+        Debug.Log("Pouet");
+        Destroy(pikeArrow.gameObject);
+    }*/
 
     void healthBarRespawn()
     {

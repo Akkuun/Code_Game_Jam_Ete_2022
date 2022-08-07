@@ -8,6 +8,8 @@ public class enemiesRegrettingAnimation : MonoBehaviour
 
     private float timerDuration = 1f;
     private float currentTimer;
+    
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +31,11 @@ public class enemiesRegrettingAnimation : MonoBehaviour
 
             if (transform.gameObject.layer == 6)
             {
-                if (gameObject.CompareTag("Pic") || gameObject.CompareTag("Canon"))
+                if (gameObject.CompareTag("Pic"))
+                {
+                    Destroy(gameObject.transform.parent.gameObject);
+                }
+                else if (gameObject.CompareTag("Canon"))
                 {
                     Destroy(gameObject.transform.parent.gameObject);
                 }
@@ -43,7 +49,8 @@ public class enemiesRegrettingAnimation : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+        private void OnTriggerEnter2D(Collider2D collision)
     {
         m_animator.SetBool("isRegretting", true);
 
