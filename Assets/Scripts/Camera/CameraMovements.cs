@@ -6,6 +6,8 @@ public class CameraMovements : MonoBehaviour
 {
     private Transform player;
 
+    private float m_speed = 24f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +18,24 @@ public class CameraMovements : MonoBehaviour
     void Update()
     {
         Vector3 nextPosition = transform.position;
-
-        nextPosition.x = (float)((int)((player.position.x+15)/30)*30);
-        transform.position = nextPosition;
+        float cameraFuturPosition = (float)((int)((player.position.x + 15) / 30) * 30);
+        if (cameraFuturPosition != Mathf.Round(transform.position.x))
+        {
+            if(cameraFuturPosition > transform.position.x)
+            {
+                nextPosition.x += Time.deltaTime * m_speed;
+                transform.position = nextPosition;
+            }
+            else
+            {
+                nextPosition.x -= Time.deltaTime * m_speed;
+                transform.position = nextPosition;
+            }
+        }
+        else
+        {
+            nextPosition.x = cameraFuturPosition;
+            transform.position = nextPosition;
+        }
     }
 }
