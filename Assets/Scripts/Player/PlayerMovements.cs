@@ -57,6 +57,8 @@ public class PlayerMovements : MonoBehaviour
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
 
+    private HealthBar healthBar;
+
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +75,8 @@ public class PlayerMovements : MonoBehaviour
         spawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
 
         currentTimer = timerDuration;
+
+        healthBar = GameObject.FindGameObjectWithTag("Health").GetComponent<HealthBar>();
     }
 
     // Update is called once per frame
@@ -107,17 +111,34 @@ public class PlayerMovements : MonoBehaviour
             }
         }
 
+        if (healthBar.getIsDead())
+        {
+            m_animator.SetBool("isDying", true);
+
+            if (m_animator.GetBool("isDying"))
+            {
+                currentTimer = timerDuration;
+                m_rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+                Debug.Log("pouet1");
+            }
+
+            Invoke("healthBarRespawn", 1);
+
+        }
+
         if (currentTimer <= 0 && m_animator.GetBool("isDying") && !isMovingSpawnPointTrigger)
         {
             transform.position = respawnPoint;
             m_animator.SetBool("isDying", false);
             m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+     
         }
         else if (currentTimer <= 0 && m_animator.GetBool("isDying") && isMovingSpawnPointTrigger)
         {
             transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
             m_animator.SetBool("isDying", false);
             m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+  
         }
 
         else if (currentTimer > 0 && m_animator.GetBool("isDying"))
@@ -126,7 +147,33 @@ public class PlayerMovements : MonoBehaviour
         }
 
     }
-    
+
+    void healthBarRespawn()
+    {
+
+        while (m_animator.GetBool("isDying"))
+        {
+            if (currentTimer <= 0 && !isMovingSpawnPointTrigger)
+            {
+                transform.position = respawnPoint;
+                m_animator.SetBool("isDying", false);
+                m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+                healthBar.resetLife();
+            }
+            else if (currentTimer <= 0 && isMovingSpawnPointTrigger)
+            {
+                transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
+                m_animator.SetBool("isDying", false);
+                m_rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+                healthBar.resetLife();
+            }
+            else if (currentTimer > 0)
+            {
+                currentTimer -= Time.deltaTime;
+            }
+        }
+    }
+
     private void HorizontalMovements()
     {
         float horitonalInput = Input.GetAxisRaw("Horizontal");
@@ -371,26 +418,23 @@ public class PlayerMovements : MonoBehaviour
     //Trigger detection, if the character trigger a checkpoint, his respawn point will be the point of trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log(collision.tag);
         
         if (collision.tag == "Checkpoint")
         {
             respawnPoint = transform.position;
-            GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-            Debug.Log("enter");
+            /*GameObject[] checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
+            
             foreach(GameObject checkpoint in checkpoints)
             {
                 if(respawnPoint != collision.gameObject.transform.position)
                 {
-                    Debug.Log("not");
                     collision.gameObject.GetComponent<Animator>().SetBool("isActivated", false);
                 }
                 else
                 {
-                    Debug.Log("is");
                     collision.gameObject.GetComponent<Animator>().SetBool("isActivated", true);
                 }
-            }
+            }*/
             isMovingSpawnPointTrigger = false;
 
         }

@@ -29,10 +29,8 @@ public class HealthBar : MonoBehaviour
     }
 
     public void mort(){
-        
         currentLifePoint = 0; 
         slider.value = 0;
-            
     }
 
     public void resetLife(){
