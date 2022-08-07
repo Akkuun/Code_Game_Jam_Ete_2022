@@ -26,7 +26,7 @@ public class ItemCollector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision){
 
-        if (pic + canon < 5)
+            if (pic + canon < 5)
         {
             if (collision.gameObject.CompareTag("Pic"))
             { //récupère le type d'obstacle
