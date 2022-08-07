@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1768857422367403904}
   - component: {fileID: 1768857422367403905}
   - component: {fileID: 1768857422367403910}
+  - component: {fileID: 9009401546989933642}
   m_Layer: 3
   m_Name: HorizontalPlateform
   m_TagString: Plateform
@@ -54,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1533727591
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fa10616b44e1d234983397a2b601d4a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,3 +128,30 @@ MonoBehaviour:
   speed: 1.05
   x1: 3
   x2: 6
+--- !u!114 &9009401546989933642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768857422367403911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 7faec2a3a952cdc88ff41d9083f9f96d
+  m_ShapePath:
+  - {x: -1.5, y: -0.2500863, z: 0}
+  - {x: -1.5047154, y: 0.24065557, z: 0}
+  - {x: 1.4905692, y: 0.24537092, z: 0}
+  - {x: 1.4952844, y: -0.25008625, z: 0}
+  m_ShapePathHash: -685971667
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 162432

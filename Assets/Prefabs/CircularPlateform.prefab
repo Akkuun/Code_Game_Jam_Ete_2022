@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5356629091043591109}
   - component: {fileID: 5356629091043591108}
   - component: {fileID: 5356629091043591107}
+  - component: {fileID: 8844550699670933147}
   m_Layer: 3
   m_Name: CircularPlateform
   m_TagString: Plateform
@@ -54,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1533727591
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fa10616b44e1d234983397a2b601d4a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,3 +128,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 0.50125754}
   m_EdgeRadius: 0
+--- !u!114 &8844550699670933147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5356629091043591111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: a952cdc87faec2a38ff41d9083f9f96d
+  m_ShapePath:
+  - {x: -1.5051703, y: -0.25700054, z: 0}
+  - {x: -1.5, y: 0.24666011, z: 0}
+  - {x: 1.4940641, y: 0.25068602, z: 0}
+  - {x: 1.4948299, y: -0.26217076, z: 0}
+  m_ShapePathHash: -860121963
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 162504
