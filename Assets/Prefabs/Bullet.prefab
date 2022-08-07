@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 237149960352930101}
   - component: {fileID: 4859953429596120783}
   - component: {fileID: 7551224895417501419}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet
   m_TagString: Canon
   m_Icon: {fileID: 0}

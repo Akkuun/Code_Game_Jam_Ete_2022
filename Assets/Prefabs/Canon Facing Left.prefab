@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 605238222633752083}
   - component: {fileID: 4155959043363420907}
   - component: {fileID: 2956513736795606249}
+  - component: {fileID: 4059544602223232060}
   m_Layer: 6
   m_Name: Canon
   m_TagString: Canon
@@ -148,6 +149,19 @@ MonoBehaviour:
   m_animator: {fileID: 605238222633752083}
   m_bulletPrefab: {fileID: 5245689466327653058, guid: df6a43e934d9a8e4f8941507f7f57e58, type: 3}
   m_maxDelay: 5
+--- !u!114 &4059544602223232060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186896678144354191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d404d16e3b94cfb40abb138a34f8f386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_animator: {fileID: 0}
 --- !u!1 &1244166179937956525
 GameObject:
   m_ObjectHideFlags: 0
