@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8114f2c0de45f428405da6263de4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!82 &-4847624939711924786
 AudioSource:
   m_ObjectHideFlags: 0
@@ -215,3 +216,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+=======
+  player: {fileID: 148684457532148992, guid: 8635d426776bb774d9249cf5488c17ce, type: 3}
+  item: {fileID: 3747429301991661612, guid: e4e207018a9a3154bbdfe43c75b14659, type: 3}
+>>>>>>> e8536769bbddaf75262b55857065d2469c8d32a1
