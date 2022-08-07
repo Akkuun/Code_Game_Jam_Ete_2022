@@ -1,10 +1,9 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestPlayerDeath : MonoBehaviour
+public class testPlayer : MonoBehaviour
 {
-
     private Rigidbody2D m_rigidBody;
 
     private bool m_isJumping;
@@ -13,6 +12,10 @@ public class TestPlayerDeath : MonoBehaviour
     private bool m_hasDashed;
     private bool m_canDoubleJump;
     private bool m_facingRight;
+    private bool m_isDoubleJumping;
+    private bool m_isFalling;
+    private bool soundPlayedOnce = false;
+    private bool soundPlayedTwice = false;
     private bool m_canMoveToLeft;
     private bool m_canMoveToRight;
 
@@ -37,12 +40,16 @@ public class TestPlayerDeath : MonoBehaviour
     private float timerDuration = 1f;
     private float currentTimer;
 
+    private ItemCollector m_itemCollector;
+
+
+    public AudioSource jumpSound;
+
     //-------------------------------------
 
     public LayerMask m_groundLayer;
 
     public Animator m_animator;
-    public Animator pike_animator;
 
     public Transform m_feet;
     public Transform m_right;
@@ -51,10 +58,22 @@ public class TestPlayerDeath : MonoBehaviour
     public bool m_playerHasDoubleJump;
     public bool m_playerHasDashing;
 
+
+    private int pic = 0;
+    private int canon = 0;
+    [SerializeField] private GameObject picItemPrefab;
+    [SerializeField] private GameObject canonItemPrefab;
+    private HealthBar healthBar;
+
+    private bool m_picHasBeenUsed;
+    private bool m_canonHasBeenUsed;
+
+
     // Start is called before the first frame update
     void Start()
     {
         m_rigidBody = GetComponent<Rigidbody2D>();
+        m_itemCollector = GetComponent<ItemCollector>();
         m_currentDashTime = m_maxDashTime;
         m_currentJumpTime = m_maxJumpTime;
         m_isDashing = false;
@@ -65,15 +84,18 @@ public class TestPlayerDeath : MonoBehaviour
         spawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
 
         currentTimer = timerDuration;
+
+        m_picHasBeenUsed = false;
+        m_canonHasBeenUsed = false;
+        healthBar = GameObject.FindGameObjectWithTag("Health").GetComponent<HealthBar>(); ;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         m_isGrounded = Physics2D.OverlapCircle(m_feet.position, m_checkRadius, m_groundLayer);
-        if(!m_animator.GetBool("isDying"))
+        if (!m_animator.GetBool("isDying"))
         {
-
             if (m_isGrounded)
             {
                 m_animator.SetBool("isJumping", false);
@@ -82,9 +104,9 @@ public class TestPlayerDeath : MonoBehaviour
             {
                 m_animator.SetBool("isJumping", true);
             }
-            if (m_playerHasDashing)
+            if (m_playerHasDashing || m_itemCollector.CanUseItem("canon") || m_isDashing)
             {
-           
+
                 if (!m_isDashing && m_currentDashTime >= m_maxDashTime)
                 {
                     HorizontalMovements();
@@ -97,7 +119,6 @@ public class TestPlayerDeath : MonoBehaviour
                 HorizontalMovements();
                 Jump();
             }
-
         }
 
         if (currentTimer <= 0 && m_animator.GetBool("isDying") && !isMovingSpawnPointTrigger)
@@ -105,7 +126,7 @@ public class TestPlayerDeath : MonoBehaviour
             transform.position = respawnPoint;
             m_animator.SetBool("isDying", false);
         }
-        else if (currentTimer <= 0 && m_animator.GetBool("isDying") &&  isMovingSpawnPointTrigger)
+        else if (currentTimer <= 0 && m_animator.GetBool("isDying") && isMovingSpawnPointTrigger)
         {
             transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
             m_animator.SetBool("isDying", false);
@@ -115,13 +136,12 @@ public class TestPlayerDeath : MonoBehaviour
         {
             currentTimer -= Time.deltaTime;
         }
-
     }
 
     private void HorizontalMovements()
     {
         float horitonalInput = Input.GetAxisRaw("Horizontal");
-        if(horitonalInput > 0 || horitonalInput < 0 && !m_animator.GetBool("isJumping"))
+        if (horitonalInput > 0 || horitonalInput < 0 && !m_animator.GetBool("isJumping"))
         {
             m_animator.SetFloat("Speed", 1);
         }
@@ -129,7 +149,7 @@ public class TestPlayerDeath : MonoBehaviour
         {
             m_animator.SetFloat("Speed", 0);
         }
-        if(m_animator.GetBool("isJumping"))
+        if (m_animator.GetBool("isJumping"))
         {
             m_animator.SetFloat("Speed", 0);
         }
@@ -138,7 +158,7 @@ public class TestPlayerDeath : MonoBehaviour
         {
             Flip();
         }
-        else if(horitonalInput < 0 && m_facingRight)
+        else if (horitonalInput < 0 && m_facingRight)
         {
             Flip();
         }
@@ -152,34 +172,53 @@ public class TestPlayerDeath : MonoBehaviour
     {
         float jumpInput = Input.GetAxisRaw("Jump");
 
-        //Au sol, il regénère son double jump
-        if (m_isGrounded == true && m_playerHasDoubleJump)
+
+        //Au sol, il reg�n�re son double jump
+        if (m_isGrounded && (m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")))
         {
             m_canDoubleJump = true;
         }
         //Si il est au sol et qu'il saute
-        if(m_isGrounded == true && jumpInput == 1) 
+        if (m_isGrounded && jumpInput == 1)
         {
             m_animator.SetBool("isJumping", false);
             m_animator.SetBool("isFalling", false);
             m_isJumping = true;
             m_currentJumpTime = m_maxJumpTime;
-            //m_rigidBody.velocity = Vector2.up * m_jumpForce;
+
+            m_isFalling = true;
             m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x, Vector2.up.y * m_jumpForce);
+
+
+
         }
         //Si il saute avec espace enfoncé et qu'il saute depuis pas longtemps
         if (jumpInput == 1 && m_isJumping && m_currentJumpTime > 0)
         {
-            if(m_playerHasDoubleJump && m_canDoubleJump == false)
+
+
+            //Si il a la capacité de double jump et qu'il ne peut plus sauter
+            if ((m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) && !m_canDoubleJump)
             {
+                if (m_itemCollector.CanUseItem("pic") && !m_itemCollector.IsItemUsed("pic"))
+                {
+                    m_itemCollector.UseItem("pic");
+                }
                 m_animator.SetBool("isJumping", true);
                 m_animator.SetBool("isFalling", false);
+                m_isFalling = false;
                 m_animator.SetBool("isDoubleJumping", true);
+                m_isDoubleJumping = true;
+
+
             }
             else
             {
                 m_animator.SetBool("isJumping", true);
                 m_animator.SetBool("isFalling", false);
+                m_isFalling = false;
+                m_isDoubleJumping = !m_isDoubleJumping;
+
             }
 
             //m_rigidBody.velocity = Vector2.up * m_jumpForce;
@@ -187,15 +226,21 @@ public class TestPlayerDeath : MonoBehaviour
             m_currentJumpTime -= Time.fixedDeltaTime;
         }
         //Si il est dans les airs et qu'il saute depuis trop longtemps ou qu'il est dans les airs sans sauter
-        if((!m_isGrounded && m_currentJumpTime < 0) ||(!m_isGrounded && jumpInput == 0))
+        if ((!m_isGrounded && m_currentJumpTime < 0) || (!m_isGrounded && jumpInput == 0))
         {
             m_animator.SetBool("isFalling", true);
+            m_isDoubleJumping = true;
+            m_isFalling = true;
+            m_isDoubleJumping = true;
+
+
         }
         //Si il saute pas mais qu'il est dans les airs
         if (jumpInput == 0 && !m_isGrounded)
         {
-            //Si le joueur a la capacité pour double sauter et peut double sauter
-            if (m_playerHasDoubleJump && m_canDoubleJump)
+            m_isDoubleJumping = false;
+            //Si le joueur a la capacit� pour double sauter et peut double sauter
+            if ((m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) && m_canDoubleJump)
             {
                 m_animator.SetBool("isJumping", false);
                 m_canDoubleJump = false;
@@ -203,7 +248,7 @@ public class TestPlayerDeath : MonoBehaviour
                 m_currentJumpTime = m_maxJumpTime;
             }
             //Sinon si il a pas la capacité pour double jump
-            else if(!m_playerHasDoubleJump || (!m_canDoubleJump && m_playerHasDoubleJump && m_currentJumpTime != m_maxJumpTime))
+            else if (!(m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) || (!m_canDoubleJump && (m_playerHasDoubleJump || m_itemCollector.CanUseItem("pic")) && m_currentJumpTime != m_maxJumpTime))
             {
                 m_isJumping = false;
             }
@@ -211,24 +256,41 @@ public class TestPlayerDeath : MonoBehaviour
         //Sinon si il saute pas et qu'il est par terre
         else if (jumpInput == 0 && m_isGrounded)
         {
+            m_itemCollector.ChangeUsedItem("pic");
             m_animator.SetBool("isFalling", false);
             m_animator.SetBool("isJumping", false);
             m_animator.SetBool("isDoubleJumping", false);
-            m_isJumping = false;
+            m_isFalling = false;
+            m_isDoubleJumping = false;
         }
+
+        if (jumpInput == 1 && m_isGrounded && m_isDoubleJumping)
+        {
+            m_animator.SetBool("isFalling", false);
+            m_animator.SetBool("isJumping", true);
+            m_animator.SetBool("isDoubleJumping", false);
+            m_isDoubleJumping = false;
+
+        }
+
     }
 
     private void Dash()
     {
         if (Input.GetAxisRaw("Fire1") > 0 || m_isDashing)
         {
-            if(!m_isGrounded && !m_hasDashed)
+            if (!m_isGrounded && !m_hasDashed)
             {
+                if (m_itemCollector.CanUseItem("canon") && !m_itemCollector.IsItemUsed("canon"))
+                {
+                    m_itemCollector.UseItem("canon");
+                }
                 m_isDashing = true;
 
                 m_animator.SetBool("isJumping", false);
                 m_animator.SetBool("isFalling", false);
                 m_animator.SetBool("isDashing", true);
+                m_isFalling = false;
                 if (m_animator.GetFloat("initDashCount") < 0)
                 {
                     m_rigidBody.gravityScale = 3.6f;
@@ -237,6 +299,7 @@ public class TestPlayerDeath : MonoBehaviour
                         m_animator.SetBool("isDashing", false);
                         m_animator.SetFloat("initDashCount", m_initDashTime);
                         m_animator.SetBool("isFalling", true);
+                        m_isFalling = true;
                         m_isDashing = false;
                         m_hasDashed = true;
                         m_rigidBody.velocity = Vector2.zero;
@@ -261,18 +324,22 @@ public class TestPlayerDeath : MonoBehaviour
                     m_rigidBody.velocity = Vector2.zero;
                     m_animator.SetFloat("initDashCount", m_animator.GetFloat("initDashCount") - Time.fixedDeltaTime);
                 }
-                
+
             }
         }
 
         if (m_isGrounded)
         {
+            m_itemCollector.ChangeUsedItem("canon");
             m_currentDashTime = m_maxDashTime;
             m_isDashing = false;
             m_hasDashed = false;
             m_animator.SetBool("isDashing", false);
             m_animator.SetFloat("initDashCount", m_initDashTime);
             m_animator.SetBool("isFalling", false);
+            m_isFalling = false;
+            soundPlayedOnce = true;
+            soundPlayedTwice = true;
         }
     }
 
@@ -287,7 +354,15 @@ public class TestPlayerDeath : MonoBehaviour
             {
                 currentTimer = timerDuration;
             }
+
+            if (!collision.gameObject.CompareTag("Canon") || !collision.gameObject.CompareTag("Pic"))
+            {
+                collision.gameObject.SetActive(false);
+            }
         }
+
+        if (collision.gameObject.tag == "Plateform") transform.parent = collision.transform;
+        if (collision.gameObject.tag != "Plateform") transform.parent = null;
     }
 
     //Trigger detection, if the character trigger a checkpoint, his respawn point will be the point of trigger
@@ -301,6 +376,110 @@ public class TestPlayerDeath : MonoBehaviour
         {
             isMovingSpawnPointTrigger = true;
         }
+
+        if (pic + canon < 5)
+        {
+            if (collision.gameObject.CompareTag("Pic"))
+            { //récupère le type d'obstacle
+                pic += 1;
+                healthBar.resetLife();
+
+                GameObject picObject = Instantiate(picItemPrefab) as GameObject;
+
+                if (collision.transform.gameObject.layer == 6)
+                {
+                    //récupère le parent parent (pike = children, children)
+                    collision.gameObject.transform.parent.gameObject.SetActive(false);
+                }
+            }
+            if (collision.gameObject.CompareTag("Canon"))
+            {
+                canon += 1;
+                healthBar.resetLife();
+
+
+                GameObject canonObject = Instantiate(canonItemPrefab) as GameObject;
+
+
+                if (collision.transform.gameObject.layer == 6)
+                {
+
+                    //récupère le parent parent (bullet = children, children)
+                    if (collision.gameObject.name == "Bullet")
+                    {
+                        collision.gameObject.transform.parent.gameObject.transform.parent.gameObject.SetActive(false);
+
+                    }
+                    else
+                    {
+                        collision.gameObject.transform.parent.gameObject.SetActive(false);
+                    }
+
+                }
+            }
+
+        }
+
+    }
+
+    public void UseItem(string _item)
+    {
+        if (_item.Equals("pic"))
+        {
+            GameObject[] smallPics = GameObject.FindGameObjectsWithTag("PicItem");
+            Destroy((GameObject)smallPics.GetValue(0));
+            m_picHasBeenUsed = true;
+            pic -= 1;
+            healthBar.degat();
+        }
+        else if (_item.Equals("canon"))
+        {
+            GameObject[] smallCanons = GameObject.FindGameObjectsWithTag("CanonItem");
+            Destroy(smallCanons[0]);
+            m_canonHasBeenUsed = true;
+            canon -= 1;
+            healthBar.degat();
+        }
+    }
+
+    public bool CanUseItem(string _item)
+    {
+        if (_item.Equals("pic"))
+        {
+            return pic >= 1;
+        }
+        if (_item.Equals("canon"))
+        {
+            return canon >= 1;
+        }
+        return false;
+    }
+
+    public bool IsItemUsed(string _item)
+    {
+        if (_item.Equals("pic"))
+        {
+            return m_picHasBeenUsed;
+
+        }
+        if (_item.Equals("canon"))
+        {
+            return m_canonHasBeenUsed;
+        }
+        return false;
+    }
+
+    public void ChangeUsedItem(string _item)
+    {
+        if (_item.Equals("pic"))
+        {
+            m_picHasBeenUsed = false;
+
+        }
+        if (_item.Equals("canon"))
+        {
+            m_canonHasBeenUsed = false;
+        }
     }
 
     private void Flip()
@@ -312,13 +491,52 @@ public class TestPlayerDeath : MonoBehaviour
         m_facingRight = !m_facingRight;
     }
 
-    public void setHasDoubleJump(bool doubleJump){
+    public bool getHasDashed()
+    {
+
+        return m_hasDashed;
+    }
+
+    public bool getIsGrounded()
+    {
+
+        return m_isGrounded;
+    }
+
+    public bool getIsDoubleJumping()
+    {
+
+        return m_isDoubleJumping;
+    }
+
+    public bool getIsJumping()
+    {
+        return m_isJumping;
+    }
+
+    public bool getHasDoubleJumped()
+    {
+
+        return m_playerHasDoubleJump;
+
+    }
+
+    public bool getIsFalling()
+    {
+        return m_isFalling;
+    }
+    //doit faire avec hasdoublejumped plutot
+
+    public void setHasDoubleJump(bool doubleJump)
+    {
         m_playerHasDoubleJump = doubleJump;
         Jump();
     }
 
-    public void setHasDash(bool dash){
+    public void setHasDash(bool dash)
+    {
         m_playerHasDashing = dash;
         Dash();
     }
+
 }
