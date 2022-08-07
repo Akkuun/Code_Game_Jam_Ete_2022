@@ -8,7 +8,7 @@ public class enemiesRegrettingAnimationTuto : MonoBehaviour
 
     private float timerDuration = 1f;
     private float currentTimer;
-    [SerializeField] private AudioSource uwuSound;
+    
 
     public GameObject screenUwu;
 
@@ -32,9 +32,9 @@ public class enemiesRegrettingAnimationTuto : MonoBehaviour
             m_animator.SetBool("isRegretting", false);
             if (transform.gameObject.layer == 6)
             {
-                GameObject bg = GameObject.Find("BackgroundMusic");
-                bg.SetActive(false);
-                uwuSound.Play();
+                AudioSource bg = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
+                bg.Stop();
+                
 
                 
                 if (gameObject.CompareTag("Pic") || gameObject.CompareTag("Canon"))
@@ -42,6 +42,9 @@ public class enemiesRegrettingAnimationTuto : MonoBehaviour
                    
                     Destroy(gameObject.transform.parent.gameObject);
                     GameObject picObject = Instantiate(screenUwu) as GameObject;
+                    
+                    
+                  
 
                 }
                 
