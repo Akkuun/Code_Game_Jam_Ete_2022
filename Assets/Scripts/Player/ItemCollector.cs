@@ -9,10 +9,9 @@ public class ItemCollector : MonoBehaviour
     private int canon = 0; 
     [SerializeField] private GameObject picItemPrefab; 
     [SerializeField] private GameObject canonItemPrefab;
-    private HealthBar healthBar; 
+    private HealthBar healthBar;
 
 
-    
 
     private bool m_picHasBeenUsed;
     private bool m_canonHasBeenUsed;
@@ -22,7 +21,7 @@ public class ItemCollector : MonoBehaviour
     {
         m_picHasBeenUsed = false;
         m_canonHasBeenUsed = false;
-        healthBar = GameObject.FindGameObjectWithTag("Health").GetComponent<HealthBar>();;
+        healthBar = GameObject.FindGameObjectWithTag("Health").GetComponent<HealthBar>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision){
@@ -53,9 +52,11 @@ public class ItemCollector : MonoBehaviour
 
                 if (collision.transform.gameObject.layer == 6)
                 {
-                    
+
                     //récupère le parent parent (bullet = children, children)
-                    if(collision.gameObject.name == "Bullet"){
+
+                    if (collision.gameObject.name == "Bullet"){
+                        ///collision.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.GetComponent<Animator>
                         Destroy(collision.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject); 
             
                     }/*else{
@@ -79,6 +80,9 @@ public class ItemCollector : MonoBehaviour
             m_picHasBeenUsed = true;
             pic -= 1;
             healthBar.degat();
+            if(healthBar.getIsDead()){
+                //healthBar.resetLife();
+            }
         }
         else if (_item.Equals("canon"))
         {
@@ -87,6 +91,9 @@ public class ItemCollector : MonoBehaviour
             m_canonHasBeenUsed = true;
             canon -= 1;
             healthBar.degat();
+            if(healthBar.getIsDead()){
+                //healthBar.resetLife();
+            }
         }
     }
 
