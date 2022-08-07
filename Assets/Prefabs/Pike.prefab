@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 2419124073735118134}
   - component: {fileID: 2419124073735118135}
   - component: {fileID: 2419124073735118120}
+  - component: {fileID: 6054613603737490108}
   m_Layer: 6
   m_Name: Pike
   m_TagString: Pic
@@ -87,7 +88,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,8 +106,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1845098883
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 1239913273, guid: 32893497f1e8859439741803233f117f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -165,6 +166,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6054613603737490108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2419124073735118121}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 7faec2a3a952cdc88ff41d9067d36a5b83f9f96dc735b19b00000000
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: -0.004955679, y: 0.50473726, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  m_ShapePathHash: 1991728335
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -1112116
 --- !u!1 &2419124074489287862
 GameObject:
   m_ObjectHideFlags: 0

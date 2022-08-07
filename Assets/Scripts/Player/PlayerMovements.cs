@@ -39,7 +39,7 @@ public class PlayerMovements : MonoBehaviour
 
     private ItemCollector m_itemCollector;
 
-    public AudioClip jumpSound;
+    //public AudioClip jumpSound;
 
     //-------------------------------------
 
@@ -182,12 +182,12 @@ public class PlayerMovements : MonoBehaviour
                 if (!soundPlayedOnce)
                 {
                     soundPlayedOnce = !soundPlayedOnce;
-                    jumpSound.PlayOneShot();
+                    //jumpSound.PlayOneShot();
                 }
                 else if(!soundPlayedOnce && canReplay && !soundPlayedTwice)
                 {
                     soundPlayedTwice = !soundPlayedTwice;
-                    jumpSound.Play();
+                    //jumpSound.Play();
                 }
 
             }

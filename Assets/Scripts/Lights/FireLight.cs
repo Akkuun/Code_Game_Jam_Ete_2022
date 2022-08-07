@@ -5,17 +5,18 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class FireLight : MonoBehaviour
 {
-
+    private float baseFloat;
+    public float variationFloat = 0;
     // Start is called before the first frame update
     void Start()
     {
-
+        baseFloat = transform.GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float variation = 0.4f + Random.Range(-0.01f, 0.01f);
+        float variation = baseFloat + Random.Range(-variationFloat, variationFloat);
         transform.GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity = variation;
 
     }

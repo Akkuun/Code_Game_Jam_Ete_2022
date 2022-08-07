@@ -138,7 +138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d273776fdd4160c429aa87c3ef7790ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpSound: {fileID: 7200688357336901850}
   m_groundLayer:
     serializedVersion: 2
     m_Bits: 264
@@ -245,7 +244,7 @@ MonoBehaviour:
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
-  m_ApplyToSortingLayers: 7faec2a367d36a5b83f9f96d
+  m_ApplyToSortingLayers: 7faec2a367d36a5b83f9f96da952cdc8000000008ff41d90
   m_ShapePath:
   - {x: -0.12549151, y: -0.39140803, z: 0}
   - {x: -0.103032306, y: -0.02129728, z: 0}
@@ -254,7 +253,7 @@ MonoBehaviour:
   - {x: 0.102431916, y: -0.3915538, z: 0}
   m_ShapePathHash: -1207279035
   m_Mesh: {fileID: 0}
-  m_InstanceId: 93644
+  m_InstanceId: 116298
 --- !u!1 &980358992086333564
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +417,7 @@ MonoBehaviour:
   m_Intensity: 0.8
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 7faec2a3
+  m_ApplyToSortingLayers: 7faec2a3a952cdc8
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
