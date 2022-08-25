@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 public class FinishScript : MonoBehaviour
 {
 
-  
+  private bool playedOnce= false;
 
     
    public PlayableDirector timeline;
@@ -16,7 +16,9 @@ public class FinishScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
    
-          StartCoroutine(StartCutscene());
+       if(!playedOnce)   StartCoroutine(StartCutscene()); playedOnce=true;
+
+       // Destroy(other.gameObject,5);
 
     }
 
@@ -27,6 +29,8 @@ public class FinishScript : MonoBehaviour
       
         timeline.playableAsset = cutscene;
         timeline.Play();
+
+       
     }
 
 

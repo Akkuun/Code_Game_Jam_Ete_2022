@@ -215,6 +215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_animator: {fileID: 2060538134857746731}
+  player: {fileID: 148684457532148992, guid: 8635d426776bb774d9249cf5488c17ce, type: 3}
+  item: {fileID: 777642571241505959, guid: e5ba2c0a229f1d04fa9754d8c270b12a, type: 3}
 --- !u!60 &2733856471139942291
 PolygonCollider2D:
   m_ObjectHideFlags: 0
