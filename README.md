@@ -1,5 +1,6 @@
 # Code_Game_Jam_2024
-![image](https://github.com/Akkuun/Code_Game_Jam_2024/assets/90316879/2a97fadd-601f-4967-b7dc-c499a876a61a)
+![image](https://github.com/Akkuun/Code_Game_Jam_Ete_2022/assets/90316879/7f1cccce-820f-453d-981e-552f61cb9eb9)
+
 
 Dans le cadre d'une Game Jam [GDL Game Jam 2023](https://itch.io/jam/gdl-august-2022-jam), mon équipe et moi-même avons du créer un jeu from scratch en 3 jours sur un thème précis.
 
@@ -17,6 +18,10 @@ Membres de l'équipe :
 **DUBAN Mathis** : Gameplay Programmer
 
 **SERRANO Lea** : Gameplay Programmer
+
+**Classement**
+
+<img width="599" alt="image" src="https://github.com/Akkuun/Code_Game_Jam_Ete_2022/assets/90316879/808384b5-9811-4e53-9cf6-c0b771a50ef8">
 
 
 
@@ -55,7 +60,7 @@ Vidéo de présentation du projet :
 
 https://github.com/Akkuun/Code_Game_Jam_2024/assets/90316879/77cf2109-4f7b-4d1a-8b06-62c9ca88faf0
 
-Lien itch.io : https://byxis.itch.io/legends-souls
+Lien itch.io : [https://byxis.itch.io/legends-souls](https://byxis.itch.io/friendly-foes)
 
 Tout les assets et musiques présent dans le jeu ont été réalisés par nos soins.
 
