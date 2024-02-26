@@ -35,6 +35,9 @@ You enter a very strange cave, equipped with your proud hat. You're not sure why
 
 ![image](https://github.com/Akkuun/Code_Game_Jam_Ete_2022/assets/90316879/80787d0c-c989-4a0f-aa2d-8f7faceb145e)
 
+![image](https://github.com/Akkuun/Code_Game_Jam_Ete_2022/assets/90316879/b44c6b55-b3a2-42a4-93e7-7f7d11c6abdc)
+
+
 
 Controls: 
 
