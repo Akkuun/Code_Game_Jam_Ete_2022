@@ -1,10 +1,11 @@
 # Code_Game_Jam_2024
 ![image](https://github.com/Akkuun/Code_Game_Jam_2024/assets/90316879/2a97fadd-601f-4967-b7dc-c499a876a61a)
 
-Dans le cadre d'une Game Jam "GDL Game Jam" 2023, mon équipe et moi-même avons du créer un jeu from scratch en 36 heures sur un thème précis.
+Dans le cadre d'une Game Jam [GDL Game Jam 2023](https://itch.io/jam/gdl-august-2022-jam), mon équipe et moi-même avons du créer un jeu from scratch en 3 jours sur un thème précis.
+
 Le thème de l'année était : **Death is not the end... Death is progress**.
 
-Dans ce contexte nous avons créer un jeu 2D avec le moteur de jeu Unity.
+Dans ce contexte nous avons créé un jeu 2D avec le moteur de jeu Unity.
 
 
 Membres de l'équipe :
